@@ -4,42 +4,52 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 
-public abstract class Ability : IUsable
+namespace Abilities
 {
-    private float cooldown;
-    private float remainingCooldown;
-    private List<ReactiveProperty<bool>> conditions;
-    
-    private IDisposable cooldownTimerDisposable;
-    
-    public virtual void Use()
+    public abstract class Ability : IUsable
     {
-        if (AreConditionsMet())
-            return;
-        remainingCooldown = cooldown;
-        cooldownTimerDisposable?.Dispose();
-        cooldownTimerDisposable =
-            Observable
-                .EveryUpdate()
-                .Subscribe(_ =>
-                {
-                    if (remainingCooldown <= 0)
+        protected float cooldown;
+        protected float remainingCooldown;
+        protected List<ReactiveProperty<bool>> conditions = new List<ReactiveProperty<bool>>();
+    
+        private IDisposable cooldownTimerDisposable;
+    
+        public KeyCode UseButton { get; protected set; }
+    
+        public virtual void Use()
+        {
+            remainingCooldown = cooldown;
+            cooldownTimerDisposable?.Dispose();
+            cooldownTimerDisposable =
+                Observable
+                    .EveryUpdate()
+                    .Subscribe(_ =>
                     {
-                        cooldownTimerDisposable.Dispose();
-                        return;
-                    }
-                    remainingCooldown = MathF.Max(0f, remainingCooldown - Time.deltaTime);
-                });
-    }
+                        if (remainingCooldown <= 0)
+                        {
+                            cooldownTimerDisposable.Dispose();
+                            cooldownTimerDisposable = null;
+                            return;
+                        }
+                        remainingCooldown = MathF.Max(0f, remainingCooldown - Time.deltaTime);
+                    });
+        }
 
-    public bool IsOnCooldown(out float remainingCooldown)
-    {
-        remainingCooldown = this.remainingCooldown;
-        return cooldownTimerDisposable != null;
-    }
+        public void CheckAndUse()
+        {
+            if (AreConditionsMet())
+                Use();
+        }
 
-    private bool AreConditionsMet()
-    {
-        return conditions.All(condition => condition.HasValue && condition.Value) && !IsOnCooldown(out _);
+        public bool IsOnCooldown(out float remainingCooldown)
+        {
+            remainingCooldown = this.remainingCooldown;
+            return cooldownTimerDisposable != null;
+        }
+
+        private bool AreConditionsMet()
+        {
+            return conditions.All(condition => condition.HasValue && condition.Value) && !IsOnCooldown(out _);
+        }
     }
 }

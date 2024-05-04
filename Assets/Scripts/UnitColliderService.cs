@@ -6,8 +6,7 @@ using UnityEngine;
 
 public class UnitColliderService : IDisposable
 {
-    public ReactiveCommand IsLanded = new ReactiveCommand();
-    public ReactiveCommand IsFlown = new ReactiveCommand();
+    public ReactiveProperty<bool> IsLanded = new ReactiveProperty<bool>();
 
     private CompositeDisposable triggerColliderDisposable = new CompositeDisposable();
     public void Init(Collider groundCollider)
@@ -17,7 +16,7 @@ public class UnitColliderService : IDisposable
             .Subscribe(collider =>
             {
                 if (collider.transform.GetComponent<EnvironmentObject>())
-                    IsLanded.Execute();
+                    IsLanded.Value = true;
             })
             .AddTo(triggerColliderDisposable);
         
@@ -26,7 +25,7 @@ public class UnitColliderService : IDisposable
             .Subscribe(collider =>
             {
                 if (collider.transform.GetComponent<EnvironmentObject>())
-                    IsFlown.Execute();
+                    IsLanded.Value = false;
             })
             .AddTo(triggerColliderDisposable);
     }

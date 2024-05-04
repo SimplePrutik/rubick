@@ -21,6 +21,12 @@ public class MovementService : IDisposable
 
     private readonly CompositeDisposable generalDisposable = new CompositeDisposable();
     
+    public float VerticalMovingVelocity
+    {
+        get => verticalMovingVelocity;
+        set => verticalMovingVelocity = value;
+    }
+    
     [Inject]
     public void Construct(
         TpvCameraController tpvCameraController,
@@ -50,7 +56,6 @@ public class MovementService : IDisposable
                 if (!tpvCameraController.IsLocked || !fpvCameraController.IsLocked)
                 {
                     Walk();
-                    Jump();
                     Rotate();
                 }
 
@@ -64,18 +69,17 @@ public class MovementService : IDisposable
         
         this.unitColliderService
             .IsLanded
-            .Subscribe(_ =>
+            .Subscribe(value =>
             {
-                acceleration = acceleration.ChangeY(0f);
-                verticalMovingVelocity = 0f;
-            })
-            .AddTo(generalDisposable);
-            
-        this.unitColliderService
-            .IsFlown
-            .Subscribe(_ =>
-            {
-                acceleration = Vector3.down * physicsSettings.GravityStrength;
+                if (value)
+                {
+                    acceleration = acceleration.ChangeY(0f);
+                    verticalMovingVelocity = 0f;
+                }
+                else
+                {
+                    acceleration = Vector3.down * physicsSettings.GravityStrength;
+                }
             })
             .AddTo(generalDisposable);
         
@@ -107,10 +111,6 @@ public class MovementService : IDisposable
         var currentRotation = playerTransform.localRotation.eulerAngles.y;
         playerTransform.rotation = Quaternion.Euler(0, 
             currentRotation + Input.GetAxis("Mouse X") * Time.deltaTime * playerStats.RotationSpeed, 0);
-    }
-    
-    private void Jump()
-    {
     }
 
     public void Dispose()

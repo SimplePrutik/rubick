@@ -1,24 +1,31 @@
 ﻿using Extentions;
+using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Abilities
 {
     public class AbilityJump : Ability
     {
-        private bool blockReset;
-        private bool blockJump;
-        
+        private MovementService movementService;
+        private float jumpHeight;
+
+        public AbilityJump(
+            ReactiveProperty<bool> isLanded,
+            MovementService movementService,
+            float jumpHeight)
+        {
+            this.movementService = movementService;
+            this.jumpHeight = jumpHeight;
+            
+            conditions.Add(isLanded);
+            cooldown = 1f;
+            UseButton = KeyCode.Space;
+        }
         public override void Use()
         {
             base.Use();
-            if (blockJump)
-                return;
-            // if (Input.GetKey(MovementSettings.Jump))
-            // {
-            //     verticalMovingVelocity = playerStats.JumpHeight;
-            //     blockJump = true;
-            //     blockVerticalReset = true;
-            // }
+            movementService.VerticalMovingVelocity = jumpHeight;
         }
     }
 }

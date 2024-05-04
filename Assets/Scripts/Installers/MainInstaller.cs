@@ -1,4 +1,5 @@
 using System;
+using Abilities;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -14,6 +15,7 @@ public class MainInstaller : MonoInstaller
         
         Container.BindInterfacesAndSelfTo<ScreensService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<MovementService>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<AbilityService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<UnitColliderService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraManager>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AppStart>().AsSingle().NonLazy();

@@ -1,4 +1,6 @@
-﻿public class Weapon : Ability, IWeapon
+﻿using Abilities;
+
+public class Weapon : Ability, IWeapon
 {
     public float GetDamage()
     {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Abilities;
 using ScriptableObjects;
 using UnityEngine;
 using Zenject;
@@ -22,7 +23,8 @@ public class PlayerController : MonoBehaviour
         FpvCameraController fpvCameraController,
         CameraManager cameraManager,
         MovementService movementService,
-        UnitColliderService unitColliderService)
+        UnitColliderService unitColliderService,
+        AbilityService abilityService)
     {
         this.cameraManager = cameraManager;
         
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
         
         unitColliderService.Init(groundCollider);
         movementService.Init(physicsSettings, playerStats, transform, unitColliderService);
+        abilityService.InitAbility(new AbilityJump(unitColliderService.IsLanded, movementService, playerStats.JumpHeight));
     }
     
     private void ChangeCamera()
