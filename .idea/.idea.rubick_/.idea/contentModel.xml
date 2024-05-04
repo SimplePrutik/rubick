@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\dimod\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\dimod\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_rubick.-1947042690.00" t="ExcludeRecursive" />
-    <e p="C:\Users\dimod\Desktop\rubick\rubick" t="IncludeRecursive">
+    <e p="C:\Users\dimod\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_rubick_.2142985824.00" t="ExcludeRecursive" />
+    <e p="C:\Users\dimod\Desktop\rubick_" t="IncludeRecursive">
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -171,7 +171,7 @@
                 <e p="TimeInterval.cs" t="Include" />
                 <e p="Timeout.cs" t="Include" />
                 <e p="Timer.cs" t="Include" />
-                <e p="TimeStamp.cs" t="Include" />
+                <e p="Timestamp.cs" t="Include" />
                 <e p="ToArray.cs" t="Include" />
                 <e p="ToList.cs" t="Include" />
                 <e p="ToObservable.cs" t="Include" />
@@ -1234,8 +1234,8 @@
             <e p="Ability.cs" t="Include" />
             <e p="AbilityActionController.cs" t="Include" />
             <e p="AbilityAimingController.cs" t="Include" />
-            <e p="AbilityController.cs" t="Include" />
             <e p="AbilityJump.cs" t="Include" />
+            <e p="AbilityService.cs" t="Include" />
             <e p="IUsable.cs" t="Include" />
           </e>
           <e p="AppStart.cs" t="Include" />
@@ -1252,8 +1252,8 @@
             </e>
             <e p="CameraControllers" t="Include">
               <e p="CameraController.cs" t="Include" />
-              <e p="FPVCameraController.cs" t="Include" />
-              <e p="TPVCameraController.cs" t="Include" />
+              <e p="FpvCameraController.cs" t="Include" />
+              <e p="TpvCameraController.cs" t="Include" />
             </e>
             <e p="CameraManager.cs" t="Include" />
           </e>
@@ -1492,7 +1492,7 @@
                   <e p="OpenLinksUtility.cs" t="Include" />
                   <e p="StringUtility.cs" t="Include" />
                   <e p="Threading.cs" t="Include" />
-                  <e p="TimeStamp.cs" t="Include" />
+                  <e p="Timestamp.cs" t="Include" />
                 </e>
                 <e p="Views" t="Include">
                   <e p="Adapters" t="Include">
@@ -5814,7 +5814,7 @@
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="rubick.sln" t="IncludeFlat" />
+      <e p="rubick_.sln" t="IncludeFlat" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
       <e p="UniRx.csproj" t="IncludeRecursive" />
       <e p="UniRx.Examples.csproj" t="IncludeRecursive" />
