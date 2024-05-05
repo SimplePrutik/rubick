@@ -7,6 +7,7 @@ using UnityEngine;
 public class UnitColliderService : IDisposable
 {
     private CompositeDisposable triggerColliderDisposable = new CompositeDisposable();
+    private IDisposable onGroundedDisposable;
 
     private Transform bodyTransform;
     private CapsuleCollider bodyCollider;
@@ -16,30 +17,31 @@ public class UnitColliderService : IDisposable
     
     public ReactiveProperty<bool> IsLanded = new ReactiveProperty<bool>();
     public void Init(
-        Collider groundCollider,
         CapsuleCollider bodyCollider,
         Transform bodyTransform)
     {
         this.bodyCollider = bodyCollider;
         this.bodyTransform = bodyTransform;
-        
-        groundCollider
-            .OnTriggerEnterAsObservable()
-            .Subscribe(collider =>
+
+        onGroundedDisposable?.Dispose();
+        onGroundedDisposable = Observable
+            .EveryUpdate()
+            .Subscribe(_ =>
             {
-                if (collider.transform.GetComponent<EnvironmentObject>())
-                    IsLanded.Value = true;
-            })
-            .AddTo(triggerColliderDisposable);
-        
-        groundCollider
-            .OnTriggerExitAsObservable()
-            .Subscribe(collider =>
-            {
-                if (collider.transform.GetComponent<EnvironmentObject>())
+                if (Physics.SphereCast(
+                    bodyTransform.position + Vector3.down * (bodyCollider.height / 2f + bodyCollider.radius),
+                    SKIN_WIDTH,
+                    Vector3.down,
+                    out var _,
+                    0.1f))
+                {
+                    if (!IsLanded.Value)
+                        IsLanded.Value = true;
+                    return;
+                }
+                if (IsLanded.Value)
                     IsLanded.Value = false;
-            })
-            .AddTo(triggerColliderDisposable);
+            });
     }
 
     public Vector3 CollideAndSlide(Vector3 velocity, Vector3 position, int depth)
@@ -49,14 +51,16 @@ public class UnitColliderService : IDisposable
 
         var distance = velocity.magnitude + SKIN_WIDTH;
 
-        RaycastHit hit;
         var height = bodyCollider.height;
-        var p1 = bodyTransform.position + Vector3.down * height / 2f;
+        var p1 = position + Vector3.down * height / 2f;
         var p2 = p1 + Vector3.up * height;
-        if (Physics.CapsuleCast(p1, p2, bodyCollider.radius, velocity.normalized, out hit, distance))
+        if (Physics.CapsuleCast(p1, p2, bodyCollider.radius, velocity.normalized, out var hit, distance))
         {
             var snapToSurface = velocity.normalized * (hit.distance - SKIN_WIDTH);
             var leftOver = velocity - snapToSurface;
+            
+            if (snapToSurface.magnitude <= SKIN_WIDTH)
+                snapToSurface = Vector3.zero;
 
             var magnitude = leftOver.magnitude;
             leftOver = Vector3.ProjectOnPlane(leftOver, hit.normal).normalized;

@@ -12,6 +12,7 @@ public class MainInstaller : MonoInstaller
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PhysicsSettings physicsSettings;
     [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private CameraSettings cameraSettings;
     public override void InstallBindings()
     {
         Container.BindIFactory<Type, BaseScreen>().FromFactory<ScreensFactory>();
@@ -31,5 +32,6 @@ public class MainInstaller : MonoInstaller
         Container.Bind<PlayerController>().FromComponentInNewPrefab(playerController).AsSingle().NonLazy();
         Container.Bind<PhysicsSettings>().FromScriptableObject(physicsSettings).AsSingle().NonLazy();
         Container.Bind<PlayerStats>().FromScriptableObject(playerStats).AsSingle().NonLazy();
+        Container.Bind<CameraSettings>().FromScriptableObject(cameraSettings).AsSingle().NonLazy();
     }
 }

@@ -18,7 +18,7 @@ namespace Abilities
             this.movementService = movementService;
             jumpHeight = playerStats.JumpHeight;
             
-            conditions.AddRange(new []{unitColliderService.IsLanded, cameraService.IsFPV});
+            conditions.AddRange(new []{unitColliderService.IsLanded});
             cooldown = 1f;
             UseButton = MovementSettings.Jump;
         }

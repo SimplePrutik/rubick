@@ -79,3 +79,4 @@ MonoBehaviour:
   playerController: {fileID: 4368481312767531927, guid: bcffeca7b4dc6e94bacf6097d58a2fa9, type: 3}
   physicsSettings: {fileID: 11400000, guid: 1f1a0965239bc3b41980014929979ace, type: 2}
   playerStats: {fileID: 11400000, guid: ab9ad82535b631c448de6abb0bcf5e75, type: 2}
+  cameraSettings: {fileID: 11400000, guid: 87c1bedabe80ec14e92641921839d5cd, type: 2}

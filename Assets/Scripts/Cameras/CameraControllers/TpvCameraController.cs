@@ -1,21 +1,21 @@
-﻿using UniRx;
+﻿using ScriptableObjects;
+using UniRx;
 using UnityEngine;
+using Zenject;
+
 public class TpvCameraController : CameraController
 {
 
     private const float CAMERA_VERTICAL_MOVEMENT_SPEED = 0.1f;
     private const float CAMERA_VERTICAL_MOVEMENT_UPPER_CAP = 5f;
     private const float CAMERA_VERTICAL_MOVEMENT_BOTTOM_CAP = 0.5f;
-
     public void Init(
         Transform parent,
-        GameObject pointer,
-        Vector3 position,
-        Vector3 rotation)
+        GameObject pointer)
     {
         transform.SetParent(parent);
-        transform.localPosition = position;
-        transform.localRotation = Quaternion.Euler(rotation);
+        transform.localPosition = cameraSettings.TPVCameraPosition;
+        transform.localRotation = Quaternion.Euler(cameraSettings.TPVCameraRotation);
         Observable
             .EveryUpdate()
             .Subscribe(_ =>

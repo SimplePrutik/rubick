@@ -87,22 +87,24 @@ public class MovementService : IDisposable
     
     private void Walk()
     {
+        var direction = Vector2.zero;
         if (Input.GetKey(MovementSettings.MoveForward))
         {
-            horizontalMovingVelocity += playerTransform.forward.ConvertToHorizontalMovement() * playerStats.MoveSpeed;
+            direction += playerTransform.forward.ConvertToHorizontalMovement();
         }
         if (Input.GetKey(MovementSettings.MoveBack))
         {
-            horizontalMovingVelocity -= playerTransform.forward.ConvertToHorizontalMovement() * playerStats.MoveSpeed;
+            direction -= playerTransform.forward.ConvertToHorizontalMovement();
         }
         if (Input.GetKey(MovementSettings.MoveRight))
         {
-            horizontalMovingVelocity += playerTransform.right.ConvertToHorizontalMovement() * playerStats.MoveSpeed;
+            direction += playerTransform.right.ConvertToHorizontalMovement();
         }
         if (Input.GetKey(MovementSettings.MoveLeft))
         {
-            horizontalMovingVelocity -= playerTransform.right.ConvertToHorizontalMovement() * playerStats.MoveSpeed;
+            direction -= playerTransform.right.ConvertToHorizontalMovement();
         }
+        horizontalMovingVelocity += direction.normalized * playerStats.MoveSpeed;
     }
     
     private void Rotate()

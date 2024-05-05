@@ -3,14 +3,11 @@ using UnityEngine;
 
 public class FpvCameraController : CameraController
 {
-    public void Init(
-        Transform parent,
-        Vector3 position,
-        Vector3 rotation)
+    public void Init(Transform parent)
     {
         transform.SetParent(parent);
-        transform.localPosition = position;
-        transform.localRotation = Quaternion.Euler(rotation);
+        transform.localPosition = cameraSettings.FPVCameraPosition;
+        transform.localRotation = Quaternion.Euler(cameraSettings.FPVCameraRotation);
         Observable
             .EveryUpdate()
             .Subscribe(_ =>
