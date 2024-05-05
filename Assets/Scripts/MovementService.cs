@@ -15,8 +15,9 @@ public class MovementService : IDisposable
 
     private TpvCameraController tpvCameraController;
     private FpvCameraController fpvCameraController;
-    private UnitColliderService unitColliderService;
+    private PhysicsSettings physicsSettings;
     private PlayerStats playerStats;
+    private UnitColliderService unitColliderService;
     private Transform playerTransform;
 
     private readonly CompositeDisposable generalDisposable = new CompositeDisposable();
@@ -31,22 +32,20 @@ public class MovementService : IDisposable
     public void Construct(
         TpvCameraController tpvCameraController,
         FpvCameraController fpvCameraController,
+        PhysicsSettings physicsSettings,
+        PlayerStats playerStats,
         UnitColliderService unitColliderService)
     {
         this.tpvCameraController = tpvCameraController;
         this.fpvCameraController = fpvCameraController;
+        this.physicsSettings = physicsSettings;
+        this.playerStats = playerStats;
         this.unitColliderService = unitColliderService;
     }
 
-    public void Init(
-        PhysicsSettings physicsSettings,
-        PlayerStats playerStats,
-        Transform playerTransform,
-        UnitColliderService unitColliderService)
+    public void Init(Transform playerTransform)
     {
-        this.playerStats = playerStats;
         this.playerTransform = playerTransform;
-        this.unitColliderService = unitColliderService;
         
         Observable
             .EveryUpdate()
@@ -67,7 +66,7 @@ public class MovementService : IDisposable
             .AddTo(generalDisposable);
 
         
-        this.unitColliderService
+        unitColliderService
             .IsLanded
             .Subscribe(value =>
             {

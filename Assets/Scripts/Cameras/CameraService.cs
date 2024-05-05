@@ -2,13 +2,16 @@
 using System.Linq;
 using DG.Tweening;
 using UI;
+using UniRx;
 using Zenject;
 
-public class CameraManager
+public class CameraService
 {
     private ScreensService screensService;
     
     private readonly List<CameraController> controllers = new List<CameraController>();
+    
+    public ReactiveProperty<bool> IsFPV { get; } = new ReactiveProperty<bool>();
 
     [Inject]
     public void Construct(ScreensService screensService)
@@ -46,9 +49,17 @@ public class CameraManager
         if (tpvCamera == null || fpvCamera == null)
             return;
         if (tpvCamera.IsEnabled)
-            screensService.Fade(0.5f, () => SetActiveCamera<FpvCameraController>());
+            screensService.Fade(0.5f, () =>
+            {
+                SetActiveCamera<FpvCameraController>();
+                IsFPV.Value = true;
+            });
         if (fpvCamera.IsEnabled)
-            screensService.Fade(0.5f, () => SetActiveCamera<TpvCameraController>());
+            screensService.Fade(0.5f, () =>
+            {
+                SetActiveCamera<TpvCameraController>();
+                IsFPV.Value = false;
+            });
     }
 
     private CameraController GetCameraController<T>() where T : CameraController

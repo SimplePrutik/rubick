@@ -4,7 +4,7 @@ using Zenject;
 [RequireComponent(typeof(Camera))]
 public abstract class CameraController : MonoBehaviour
 {
-    private CameraManager cameraManager;
+    private CameraService cameraService;
     
     protected Camera Camera;
     public bool IsLocked { get; set; }
@@ -12,17 +12,17 @@ public abstract class CameraController : MonoBehaviour
     public void SetEnable(bool value) => gameObject.SetActive(value);
 
     [Inject]
-    public void Construct(CameraManager cameraManager)
+    public void Construct(CameraService cameraService)
     {
-        this.cameraManager = cameraManager;
+        this.cameraService = cameraService;
 
         Camera = GetComponent<Camera>();
         
-        cameraManager.AddCamera(this);
+        cameraService.AddCamera(this);
     }
 
     private void OnDestroy()
     {
-        cameraManager.RemoveCamera(this);
+        cameraService.RemoveCamera(this);
     }
 }

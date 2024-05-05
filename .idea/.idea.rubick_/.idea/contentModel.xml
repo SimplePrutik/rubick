@@ -1236,6 +1236,7 @@
             <e p="AbilityAimingController.cs" t="Include" />
             <e p="AbilityJump.cs" t="Include" />
             <e p="AbilityService.cs" t="Include" />
+            <e p="AbilityViewChange.cs" t="Include" />
             <e p="IUsable.cs" t="Include" />
           </e>
           <e p="AppStart.cs" t="Include" />
@@ -1255,7 +1256,7 @@
               <e p="FpvCameraController.cs" t="Include" />
               <e p="TpvCameraController.cs" t="Include" />
             </e>
-            <e p="CameraManager.cs" t="Include" />
+            <e p="CameraService.cs" t="Include" />
           </e>
           <e p="Extensions.cs" t="Include" />
           <e p="Installers" t="Include">

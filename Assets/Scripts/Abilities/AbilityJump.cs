@@ -1,6 +1,4 @@
-﻿using Extentions;
-using UniRx;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Abilities
@@ -10,15 +8,17 @@ namespace Abilities
         private MovementService movementService;
         private float jumpHeight;
 
-        public AbilityJump(
-            ReactiveProperty<bool> isLanded,
+        [Inject]
+        public void Construct(
+            UnitColliderService unitColliderService,
             MovementService movementService,
-            float jumpHeight)
+            CameraService cameraService,
+            PlayerStats playerStats)
         {
             this.movementService = movementService;
-            this.jumpHeight = jumpHeight;
+            jumpHeight = playerStats.JumpHeight;
             
-            conditions.Add(isLanded);
+            conditions.AddRange(new []{unitColliderService.IsLanded, cameraService.IsFPV});
             cooldown = 1f;
             UseButton = KeyCode.Space;
         }

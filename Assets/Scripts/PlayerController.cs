@@ -6,14 +6,9 @@ using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats;
-    //take it somewhere else in some global game controller
-    [SerializeField] private PhysicsSettings physicsSettings;
     [SerializeField] private GameObject tpvCameraPointer;
     [SerializeField] private CameraSettings cameraSettings;
     [SerializeField] private Collider groundCollider;
-
-    private CameraManager cameraManager;
 
     private List<Ability> abilites;
 
@@ -21,28 +16,22 @@ public class PlayerController : MonoBehaviour
     public void Construct(
         TpvCameraController tpvCameraController,
         FpvCameraController fpvCameraController,
-        CameraManager cameraManager,
+        CameraService cameraService,
         MovementService movementService,
         UnitColliderService unitColliderService,
-        AbilityService abilityService)
+        AbilityService abilityService,
+        AbilityJump abilityJump,
+        AbilityViewChange abilityViewChange)
     {
-        this.cameraManager = cameraManager;
-        
         tpvCameraController.Init(transform, tpvCameraPointer, cameraSettings.TPVCameraPosition, cameraSettings.TPVCameraRotation);
         fpvCameraController.Init(transform, cameraSettings.FPVCameraPosition, cameraSettings.FPVCameraRotation);
 
-        cameraManager.SetActiveCamera<TpvCameraController>();
+        cameraService.SetActiveCamera<TpvCameraController>();
         
         unitColliderService.Init(groundCollider);
-        movementService.Init(physicsSettings, playerStats, transform, unitColliderService);
-        abilityService.InitAbility(new AbilityJump(unitColliderService.IsLanded, movementService, playerStats.JumpHeight));
-    }
-    
-    private void ChangeCamera()
-    {
-        if (Input.GetKey(KeyCode.F))
-        {
-            cameraManager.RunPlayerCameraTransition();
-        }  
+        movementService.Init(transform);
+        
+        abilityService.InitAbility(abilityJump);
+        abilityService.InitAbility(abilityViewChange);
     }
 }
