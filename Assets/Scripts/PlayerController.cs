@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject tpvCameraPointer;
     [SerializeField] private CameraSettings cameraSettings;
     [SerializeField] private Collider groundCollider;
+    [SerializeField] private CapsuleCollider bodyCollider;
 
     private List<Ability> abilites;
 
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
         cameraService.SetActiveCamera<TpvCameraController>();
         
-        unitColliderService.Init(groundCollider);
+        unitColliderService.Init(groundCollider, bodyCollider, transform);
         movementService.Init(transform);
         
         abilityService.InitAbility(abilityJump);

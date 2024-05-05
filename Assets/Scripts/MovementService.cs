@@ -61,7 +61,7 @@ public class MovementService : IDisposable
                 horizontalMovingVelocity += acceleration.ConvertToHorizontalMovement() * Time.deltaTime;
                 verticalMovingVelocity += acceleration.y * Time.deltaTime;
                 movingVelocity = Extensions.ConvertToVolumetricMovement(horizontalMovingVelocity, verticalMovingVelocity);
-                playerTransform.position += movingVelocity * Time.deltaTime;
+                playerTransform.position += unitColliderService.CollideAndSlide(movingVelocity * Time.deltaTime, playerTransform.position, 0);
             })
             .AddTo(generalDisposable);
 

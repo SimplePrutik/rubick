@@ -20,7 +20,7 @@ namespace Abilities
             
             conditions.AddRange(new []{unitColliderService.IsLanded, cameraService.IsFPV});
             cooldown = 1f;
-            UseButton = KeyCode.Space;
+            UseButton = MovementSettings.Jump;
         }
         public override void Use()
         {

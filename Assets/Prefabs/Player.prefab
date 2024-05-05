@@ -133,11 +133,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a4411e7ab5e604aabaff4d3077ef02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 11400000, guid: ab9ad82535b631c448de6abb0bcf5e75, type: 2}
-  physicsSettings: {fileID: 11400000, guid: 1f1a0965239bc3b41980014929979ace, type: 2}
   tpvCameraPointer: {fileID: 4368481312892857938}
   cameraSettings: {fileID: 11400000, guid: 87c1bedabe80ec14e92641921839d5cd, type: 2}
   groundCollider: {fileID: 7408249645020945861}
+  bodyCollider: {fileID: 2439314701158166480}
 --- !u!54 &4368481312767531924
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -210,7 +209,6 @@ GameObject:
   - component: {fileID: 3704716077823472266}
   - component: {fileID: 8974899742775294686}
   - component: {fileID: 3140274798578975824}
-  - component: {fileID: 1121119201105232796}
   m_Layer: 0
   m_Name: feet
   m_TagString: Untagged
@@ -283,20 +281,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1121119201105232796
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4731364066226438252}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &7888883156029020167
 GameObject:
   m_ObjectHideFlags: 0
