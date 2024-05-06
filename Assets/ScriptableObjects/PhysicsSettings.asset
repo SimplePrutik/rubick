@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef4c70cb98140c9baaeabff711142d5, type: 3}
   m_Name: PhysicsSettings
   m_EditorClassIdentifier: 
-  GravityStrength: 20
+  GravityStrength: 30
