@@ -19,6 +19,11 @@ public class CameraService
         this.screensService = screensService;
     }
 
+    public CameraController CurrentCamera()
+    {
+        return controllers.Find(controller => controller.IsEnabled);
+    }
+
     public void AddCamera(CameraController controller)
     {
         controllers.Add(controller);

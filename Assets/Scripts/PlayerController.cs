@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System;
 using Abilities;
-using ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
@@ -8,8 +7,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject tpvCameraPointer;
     [SerializeField] private CapsuleCollider bodyCollider;
-
-    private List<Ability> abilites;
 
     [Inject]
     public void Construct(
@@ -19,8 +16,7 @@ public class PlayerController : MonoBehaviour
         MovementService movementService,
         UnitColliderService unitColliderService,
         AbilityService abilityService,
-        AbilityJump abilityJump,
-        AbilityViewChange abilityViewChange)
+        IFactory<Type, Ability> abilityFactory)
     {
         tpvCameraController.Init(transform, tpvCameraPointer);
         fpvCameraController.Init(transform);
@@ -30,7 +26,7 @@ public class PlayerController : MonoBehaviour
         unitColliderService.Init(bodyCollider, transform);
         movementService.Init(transform);
         
-        abilityService.InitAbility(abilityJump);
-        abilityService.InitAbility(abilityViewChange);
+        abilityService.InitAbility(abilityFactory.Create(typeof(AbilityJump)));
+        abilityService.InitAbility(abilityFactory.Create(typeof(AbilityViewChange)));
     }
 }

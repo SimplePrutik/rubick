@@ -1233,20 +1233,16 @@
           <e p="Abilities" t="Include">
             <e p="Ability.cs" t="Include" />
             <e p="AbilityActionController.cs" t="Include" />
-            <e p="AbilityAimingController.cs" t="Include" />
-            <e p="AbilityJump.cs" t="Include" />
+            <e p="AbilityFactory.cs" t="Include" />
             <e p="AbilityService.cs" t="Include" />
-            <e p="AbilityViewChange.cs" t="Include" />
+            <e p="ConcreteAbilities" t="Include">
+              <e p="AbilityJump.cs" t="Include" />
+              <e p="AbilityThreeArrow.cs" t="Include" />
+              <e p="AbilityViewChange.cs" t="Include" />
+            </e>
             <e p="IUsable.cs" t="Include" />
           </e>
           <e p="AppStart.cs" t="Include" />
-          <e p="Armory" t="Include">
-            <e p="Bullets" t="Include">
-              <e p="IBullet.cs" t="Include" />
-            </e>
-            <e p="IWeapon.cs" t="Include" />
-            <e p="Weapon.cs" t="Include" />
-          </e>
           <e p="Cameras" t="Include">
             <e p="Animations" t="Include">
               <e p="CameraTransitionAnimations.cs" t="Include" />
@@ -1259,6 +1255,17 @@
             <e p="CameraService.cs" t="Include" />
           </e>
           <e p="Extensions.cs" t="Include" />
+          <e p="Fight" t="Include">
+            <e p="Projectiles" t="Include">
+              <e p="Arrow.cs" t="Include" />
+              <e p="BaseProjectile.cs" t="Include" />
+            </e>
+            <e p="Stances" t="Include">
+              <e p="BaseStance.cs" t="Include" />
+              <e p="MainStance.cs" t="Include" />
+              <e p="StanceFactory.cs" t="Include" />
+            </e>
+          </e>
           <e p="Installers" t="Include">
             <e p="MainInstaller.cs" t="Include" />
           </e>
@@ -1269,17 +1276,32 @@
           <e p="MovementService.cs" t="Include" />
           <e p="MovementSettings.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
+          <e p="Pool" t="Include">
+            <e p="Pool.cs" t="Include" />
+            <e p="PoolObject.cs" t="Include" />
+          </e>
           <e p="ScriptableObjects" t="Include">
             <e p="CameraSettings.cs" t="Include" />
             <e p="PhysicsSettings.cs" t="Include" />
             <e p="PlayerStats.cs" t="Include" />
-            <e p="WeaponConfig.cs" t="Include" />
           </e>
           <e p="UI" t="Include">
-            <e p="BaseScreen.cs" t="Include" />
-            <e p="GameScreen.cs" t="Include" />
-            <e p="ScreensFactory.cs" t="Include" />
-            <e p="ScreensService.cs" t="Include" />
+            <e p="Reticle" t="Include">
+              <e p="BaseReticle.cs" t="Include" />
+              <e p="ConcreteReticles" t="Include">
+                <e p="ThreePointReticle.cs" t="Include" />
+              </e>
+              <e p="ReticleFactory.cs" t="Include" />
+              <e p="ReticleService.cs" t="Include" />
+            </e>
+            <e p="Screens" t="Include">
+              <e p="BaseScreen.cs" t="Include" />
+              <e p="ConcreteScreens" t="Include">
+                <e p="GameScreen.cs" t="Include" />
+              </e>
+              <e p="ScreensFactory.cs" t="Include" />
+              <e p="ScreensService.cs" t="Include" />
+            </e>
           </e>
           <e p="UnitColliderService.cs" t="Include" />
         </e>

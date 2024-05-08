@@ -1,7 +1,9 @@
 using System;
 using Abilities;
+using Fight.Stances;
 using ScriptableObjects;
 using UI;
+using UI.Reticle;
 using UnityEngine;
 using Zenject;
 
@@ -16,16 +18,17 @@ public class MainInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindIFactory<Type, BaseScreen>().FromFactory<ScreensFactory>();
+        Container.BindIFactory<Type, BaseReticle>().FromFactory<ReticleFactory>();
+        Container.BindIFactory<Type, Ability>().FromFactory<AbilityFactory>();
+        Container.BindIFactory<Type, BaseStance>().FromFactory<StanceFactory>();
         
         Container.BindInterfacesAndSelfTo<ScreensService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<MovementService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AbilityService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<UnitColliderService>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<ReticleService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AppStart>().AsSingle().NonLazy();
-        
-        Container.BindInterfacesAndSelfTo<AbilityJump>().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<AbilityViewChange>().AsSingle().NonLazy();
         
         Container.Bind<TpvCameraController>().FromComponentInNewPrefab(tpvCameraController).AsSingle().NonLazy();
         Container.Bind<FpvCameraController>().FromComponentInNewPrefab(fpvCameraController).AsSingle().NonLazy();

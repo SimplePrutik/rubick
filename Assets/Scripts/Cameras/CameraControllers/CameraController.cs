@@ -8,9 +8,9 @@ public abstract class CameraController : MonoBehaviour
     private CameraService cameraService;
     protected CameraSettings cameraSettings;
     
-    protected Camera Camera;
+    public Camera Camera { get; private set; }
     public bool IsLocked { get; set; }
-    public bool IsEnabled => gameObject.activeInHierarchy;
+    public bool IsEnabled => gameObject.activeSelf;
     public void SetEnable(bool value) => gameObject.SetActive(value);
 
     [Inject]
