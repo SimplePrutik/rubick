@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public abstract class Ability : IUsable
+    public abstract class Ability : IAbility
     {
         protected float cooldown;
         protected float remainingCooldown;
@@ -33,6 +33,10 @@ namespace Abilities
                         }
                         remainingCooldown = MathF.Max(0f, remainingCooldown - Time.deltaTime);
                     });
+        }
+
+        public virtual void Prepare(params object [] args)
+        {
         }
 
         public void CheckAndUse()

@@ -1,6 +1,5 @@
 using System;
 using Abilities;
-using Fight.Stances;
 using ScriptableObjects;
 using UI;
 using UI.Reticle;
@@ -20,7 +19,6 @@ public class MainInstaller : MonoInstaller
         Container.BindIFactory<Type, BaseScreen>().FromFactory<ScreensFactory>();
         Container.BindIFactory<Type, BaseReticle>().FromFactory<ReticleFactory>();
         Container.BindIFactory<Type, Ability>().FromFactory<AbilityFactory>();
-        Container.BindIFactory<Type, BaseStance>().FromFactory<StanceFactory>();
         
         Container.BindInterfacesAndSelfTo<ScreensService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<MovementService>().AsSingle().NonLazy();

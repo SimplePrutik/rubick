@@ -10,8 +10,7 @@ namespace UI.Reticle
 
         public List<Vector2> GetPointsOfFire()
         {
-            // return pointsOfFire.Select(pof => transform.TransformPoint(pof.position).)
-            return new List<Vector2>();
+            return pointsOfFire.Select(pof => (Vector2)pof.position).ToList();
         }
     }
 }

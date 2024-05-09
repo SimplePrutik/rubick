@@ -134,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpvCameraPointer: {fileID: 4368481312892857938}
   bodyCollider: {fileID: 2439314701158166480}
+  arrowPrefab: {fileID: 5327615079072930833, guid: 460e03ee210ee524f81babe8e4aae33f, type: 3}
 --- !u!54 &4368481312767531924
 Rigidbody:
   m_ObjectHideFlags: 0
