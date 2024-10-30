@@ -9,11 +9,10 @@ public class UnitColliderService : IDisposable
     private CompositeDisposable triggerColliderDisposable = new CompositeDisposable();
     private IDisposable onGroundedDisposable;
 
-    private Transform bodyTransform;
     private CapsuleCollider bodyCollider;
 
     private const int MAX_COLLIDE_BOUNCES = 5;
-    private const float SKIN_WIDTH = 0.015f;
+    private const float SKIN_WIDTH = 0.005f;
     
     public ReactiveProperty<bool> IsLanded = new ReactiveProperty<bool>();
     public void Init(
@@ -21,7 +20,6 @@ public class UnitColliderService : IDisposable
         Transform bodyTransform)
     {
         this.bodyCollider = bodyCollider;
-        this.bodyTransform = bodyTransform;
 
         onGroundedDisposable?.Dispose();
         onGroundedDisposable = Observable
@@ -29,7 +27,7 @@ public class UnitColliderService : IDisposable
             .Subscribe(_ =>
             {
                 if (Physics.SphereCast(
-                    bodyTransform.position + Vector3.down * (bodyCollider.height / 2f + bodyCollider.radius),
+                    bodyTransform.position + Vector3.down * (bodyCollider.height / 2f + SKIN_WIDTH),
                     SKIN_WIDTH,
                     Vector3.down,
                     out var _,
@@ -50,10 +48,10 @@ public class UnitColliderService : IDisposable
             return Vector3.zero;
 
         var distance = velocity.magnitude + SKIN_WIDTH;
-
-        var height = bodyCollider.height;
-        var p1 = position + Vector3.down * height / 2f;
-        var p2 = p1 + Vector3.up * height;
+        var distanceToSphere = bodyCollider.height / 2f - bodyCollider.radius;
+        
+        var p1 = position + Vector3.down * distanceToSphere;
+        var p2 = position + Vector3.up * distanceToSphere;
         if (Physics.CapsuleCast(p1, p2, bodyCollider.radius, velocity.normalized, out var hit, distance))
         {
             var snapToSurface = velocity.normalized * (hit.distance - SKIN_WIDTH);
