@@ -3,13 +3,15 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+      <Path>Assets</Path>
       <Path>Library/PackageCache/com.unity.2d.sprite@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.collab-proxy@1.17.2</Path>
+      <Path>Library/PackageCache/com.unity.ai.navigation@1.1.5</Path>
+      <Path>Library/PackageCache/com.unity.collab-proxy@2.2.0</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.6</Path>
-      <Path>Library/PackageCache/com.unity.ide.rider@3.0.15</Path>
-      <Path>Library/PackageCache/com.unity.ide.visualstudio@2.0.16</Path>
+      <Path>Library/PackageCache/com.unity.ide.rider@3.0.26</Path>
+      <Path>Library/PackageCache/com.unity.ide.visualstudio@2.0.22</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.2.5</Path>
-      <Path>Library/PackageCache/com.unity.inputsystem@1.4.4</Path>
+      <Path>Library/PackageCache/com.unity.inputsystem@1.7.0</Path>
       <Path>Library/PackageCache/com.unity.modules.ai@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.androidjni@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.animation@1.0.0</Path>
@@ -30,7 +32,6 @@
       <Path>Library/PackageCache/com.unity.modules.tilemap@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.ui@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.uielements@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.modules.uielementsnative@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.umbra@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.unityanalytics@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.unitywebrequest@1.0.0</Path>
@@ -43,17 +44,18 @@
       <Path>Library/PackageCache/com.unity.modules.vr@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.wind@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.modules.xr@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.test-framework@1.1.31</Path>
+      <Path>Library/PackageCache/com.unity.test-framework@1.1.33</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@3.0.6</Path>
-      <Path>Library/PackageCache/com.unity.timeline@1.6.4</Path>
+      <Path>Library/PackageCache/com.unity.timeline@1.7.6</Path>
       <Path>Library/PackageCache/com.unity.ugui@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.visualscripting@1.7.8</Path>
+      <Path>Library/PackageCache/com.unity.visualscripting@1.9.1</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
     </explicitIncludes>
     <explicitExcludes>
       <Path>.git</Path>
       <Path>.idea</Path>
+      <Path>Library</Path>
       <Path>Logs</Path>
       <Path>Temp</Path>
       <Path>UserSettings</Path>

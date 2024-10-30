@@ -9,9 +9,9 @@ namespace Extentions
             return new Vector2(volumetricMovement.x, volumetricMovement.z);
         }
 
-        public static Vector3 ConvertToVolumetricMovement(Vector2 horizontalMovement, float verticalMoevement)
+        public static Vector3 ConvertToVolumetricMovement(Vector2 horizontalMovement, float verticalMovement)
         {
-            return new Vector3(horizontalMovement.x, verticalMoevement, horizontalMovement.y);
+            return new Vector3(horizontalMovement.x, verticalMovement, horizontalMovement.y);
         }
 
         public static Vector3 ChangeX(this Vector3 value, float x)
