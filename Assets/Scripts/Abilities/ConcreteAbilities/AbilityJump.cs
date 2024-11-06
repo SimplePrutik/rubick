@@ -19,7 +19,7 @@ namespace Abilities
             
             conditions.AddRange(new []{unitColliderService.IsLanded});
             cooldown = 1f;
-            UseButton = MovementSettings.Jump;
+            UseButton = ButtonSettings.Jump;
         }
         public override void Use()
         {

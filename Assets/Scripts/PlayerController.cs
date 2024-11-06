@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviour
         tpvCameraController.Init(transform, tpvCameraPointer);
         fpvCameraController.Init(transform);
 
-        cameraService.SetActiveCamera<TpvCameraController>();
+        cameraService.SetActiveCamera<FpvCameraController>();
         
-        unitColliderService.Init(bodyCollider, transform);
-        movementService.Init(transform);
+        unitColliderService.InitGroundCheck(bodyCollider, transform);
+        movementService.Init(bodyCollider, transform);
         
         abilityService.InitAbility(abilityFactory.Create(typeof(AbilityJump)));
         abilityService.InitAbility(abilityFactory.Create(typeof(AbilityViewChange)));

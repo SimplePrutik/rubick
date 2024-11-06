@@ -13,7 +13,7 @@ namespace Abilities
             this.cameraService = cameraService;
             
             cooldown = 2f;
-            UseButton = KeyCode.F;
+            UseButton = ButtonSettings.ChangeView;
         }
         public override void Use()
         {

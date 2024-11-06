@@ -43,7 +43,7 @@ public class MovementService : IDisposable
         this.unitColliderService = unitColliderService;
     }
 
-    public void Init(Transform playerTransform)
+    public void Init(CapsuleCollider bodyCollider, Transform playerTransform)
     {
         this.playerTransform = playerTransform;
         
@@ -61,7 +61,11 @@ public class MovementService : IDisposable
                 horizontalMovingVelocity += acceleration.ConvertToHorizontalMovement() * Time.deltaTime;
                 verticalMovingVelocity += acceleration.y * Time.deltaTime;
                 movingVelocity = Extensions.ConvertToVolumetricMovement(horizontalMovingVelocity, verticalMovingVelocity);
-                playerTransform.position += unitColliderService.CollideAndSlide(movingVelocity * Time.deltaTime, playerTransform.position, 0);
+                playerTransform.position += unitColliderService.CollideAndSlideCapsule(
+                    bodyCollider,
+                    movingVelocity * Time.deltaTime,
+                    playerTransform.position,
+                    0);
             })
             .AddTo(generalDisposable);
 
@@ -88,19 +92,19 @@ public class MovementService : IDisposable
     private void Walk()
     {
         var direction = Vector2.zero;
-        if (Input.GetKey(MovementSettings.MoveForward))
+        if (Input.GetKey(ButtonSettings.MoveForward))
         {
             direction += playerTransform.forward.ConvertToHorizontalMovement();
         }
-        if (Input.GetKey(MovementSettings.MoveBack))
+        if (Input.GetKey(ButtonSettings.MoveBack))
         {
             direction -= playerTransform.forward.ConvertToHorizontalMovement();
         }
-        if (Input.GetKey(MovementSettings.MoveRight))
+        if (Input.GetKey(ButtonSettings.MoveRight))
         {
             direction += playerTransform.right.ConvertToHorizontalMovement();
         }
-        if (Input.GetKey(MovementSettings.MoveLeft))
+        if (Input.GetKey(ButtonSettings.MoveLeft))
         {
             direction -= playerTransform.right.ConvertToHorizontalMovement();
         }

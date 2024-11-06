@@ -9,15 +9,10 @@
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="ExternalThings" t="Include">
-          <e p="Tattoo" t="Include">
-            <e p="Circle.cs" t="Include" />
-            <e p="Dot.cs" t="Include" />
-            <e p="Line.cs" t="Include" />
-            <e p="PatternGenerator.cs" t="Include" />
-          </e>
-        </e>
         <e p="Materials" t="Include" />
+        <e p="modular_wooden_wall_kit_wcusdb0dw_low" t="Include">
+          <e p="wcusdb0dw.json" t="Include" />
+        </e>
         <e p="Plugins" t="Include">
           <e p="Demigiant" t="Include">
             <e p="DOTween" t="Include">
@@ -1351,6 +1346,7 @@
             <e p="IAbility.cs" t="Include" />
           </e>
           <e p="AppStart.cs" t="Include" />
+          <e p="ButtonSettings.cs" t="Include" />
           <e p="Cameras" t="Include">
             <e p="Animations" t="Include">
               <e p="CameraTransitionAnimations.cs" t="Include" />
@@ -1377,7 +1373,6 @@
             <e p="Map.cs" t="Include" />
           </e>
           <e p="MovementService.cs" t="Include" />
-          <e p="MovementSettings.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />
           <e p="Pool" t="Include">
             <e p="Pool.cs" t="Include" />

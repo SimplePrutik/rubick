@@ -1,5 +1,4 @@
-﻿using DG.Tweening;
-using Fight.Projectiles;
+﻿using Fight.Projectiles;
 using Pool;
 using UI.Reticle;
 using Zenject;
@@ -10,14 +9,19 @@ namespace Abilities
     {
         private ReticleService reticleService;
         private Pool<Arrow> arrowPool;
+        public float ProjectileSpeed { get; private set; } = 0.1f;
         
+        private float projectilePathLength => ProjectileSpeed * PROJECTILE_TTL;
+
+        private const float PROJECTILE_TTL = 5f;
+
         [Inject]
         public void Construct(ReticleService reticleService)
         {
             this.reticleService = reticleService;
 
-            UseButton = MovementSettings.BasicAttack;
-            cooldown = 1f;
+            UseButton = ButtonSettings.BasicAttack;
+            cooldown = 0.4f;
         }
         
         public override void Use()
@@ -27,11 +31,8 @@ namespace Abilities
             foreach (var ray in shotRays)
             {
                 var arrow = arrowPool.Spawn(ray.origin);
-                var finishPoint = ray.origin + ray.direction.normalized * 5f;
-                arrow.transform.LookAt(finishPoint);
-                arrow.transform
-                    .DOMove(finishPoint, 3f)
-                    .OnKill(() => arrow.OnDespawn.Execute());
+                var finishPoint = ray.origin + ray.direction.normalized * projectilePathLength;
+                arrow.Launch(finishPoint, PROJECTILE_TTL, ProjectileSpeed);
             }
         }
 
