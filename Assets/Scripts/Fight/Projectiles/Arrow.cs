@@ -32,9 +32,9 @@ namespace Fight.Projectiles
             ttlDisposable = Observable.Timer(TimeSpan.FromSeconds(projectileTtl))
                 .Subscribe(_ =>
                 {
-                    Despawn();
                     motionDisposable?.Dispose();
                     ttlDisposable?.Dispose();
+                    Despawn();
                 });
         }
     }

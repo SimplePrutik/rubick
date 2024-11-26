@@ -4,12 +4,13 @@ using Zenject;
 
 namespace UI
 {
-    public class ScreensFactory : IFactory<Type, BaseScreen>
+    public class ScreensFactory
     {
-        private readonly DiContainer container;
-        private readonly Transform uiRoot;
+        private DiContainer container;
+        private Transform uiRoot;
 
-        public ScreensFactory(DiContainer container)
+        [Inject]
+        public void Construct(DiContainer container)
         {
             this.container = container;
         

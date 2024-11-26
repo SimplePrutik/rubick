@@ -8,7 +8,7 @@ namespace UI.Reticle
 {
     public class ReticleService
     {
-        private IFactory<Type, BaseReticle> reticleFactory;
+        private ReticleFactory reticleFactory;
         private Dictionary<Type, BaseReticle> reticlesCache = new Dictionary<Type, BaseReticle>();
 
         private CameraService cameraService;
@@ -16,9 +16,7 @@ namespace UI.Reticle
         private BaseReticle currentReticle;
         
         [Inject]
-        public void Construct(
-            IFactory<Type, BaseReticle> reticleFactory,
-            CameraService cameraService)
+        public void Construct(ReticleFactory reticleFactory, CameraService cameraService)
         {
             this.reticleFactory = reticleFactory;
             this.cameraService = cameraService;

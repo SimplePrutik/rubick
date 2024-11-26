@@ -3,11 +3,12 @@ using Zenject;
 
 namespace Abilities
 {
-    public class AbilityFactory : IFactory<Type, Ability>
+    public class AbilityFactory
     {
-        private readonly DiContainer container;
+        private DiContainer container;
 
-        public AbilityFactory(DiContainer container)
+        [Inject]
+        public void Constuct(DiContainer container)
         {
             this.container = container;
         }

@@ -1,7 +1,6 @@
-using System;
 using Abilities;
 using Fight.Projectiles;
-using Pool;
+using Pooling;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +8,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject tpvCameraPointer;
     [SerializeField] private CapsuleCollider bodyCollider;
-    [SerializeField] private Arrow arrowPrefab;
 
     [Inject]
     public void Construct(
@@ -19,7 +17,7 @@ public class PlayerController : MonoBehaviour
         MovementService movementService,
         UnitColliderService unitColliderService,
         AbilityService abilityService,
-        IFactory<Type, Ability> abilityFactory)
+        AbilityFactory abilityFactory)
     {
         tpvCameraController.Init(transform, tpvCameraPointer);
         fpvCameraController.Init(transform);
@@ -34,7 +32,7 @@ public class PlayerController : MonoBehaviour
         var threeArrow = abilityFactory.Create(typeof(AbilityThreeArrow));
         abilityService.InitAbility(threeArrow);
         
-        var pool = new Pool<Arrow>(arrowPrefab, 30, new GameObject().transform);
+        var pool = new Pool<Arrow>(30, new GameObject().transform, $"Prefabs/3D/Projectiles/Arrow");
         threeArrow.Prepare(pool);
     }
 }

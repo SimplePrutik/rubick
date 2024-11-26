@@ -7,11 +7,12 @@ namespace UI
 {
     public class ScreensService
     { 
-        private readonly IFactory<Type, BaseScreen> screensFactory;
+        private ScreensFactory screensFactory;
         private Dictionary<Type, BaseScreen> screenCache = new Dictionary<Type, BaseScreen>();
         public BaseScreen CurrentScreen { get; private set; }
         
-        public ScreensService(IFactory<Type, BaseScreen> screensFactory)
+        [Inject]
+        public void Construct(ScreensFactory screensFactory)
         {
             this.screensFactory = screensFactory;
         }

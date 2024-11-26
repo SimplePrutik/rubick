@@ -1,5 +1,7 @@
 using System;
 using Abilities;
+using Fight.Projectiles;
+using Pooling;
 using ScriptableObjects;
 using UI;
 using UI.Reticle;
@@ -16,9 +18,10 @@ public class MainInstaller : MonoInstaller
     [SerializeField] private CameraSettings cameraSettings;
     public override void InstallBindings()
     {
-        Container.BindIFactory<Type, BaseScreen>().FromFactory<ScreensFactory>();
-        Container.BindIFactory<Type, BaseReticle>().FromFactory<ReticleFactory>();
-        Container.BindIFactory<Type, Ability>().FromFactory<AbilityFactory>();
+        
+        Container.BindInterfacesAndSelfTo<ScreensFactory>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<ReticleFactory>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<AbilityFactory>().AsSingle().NonLazy();
         
         Container.BindInterfacesAndSelfTo<ScreensService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<MovementService>().AsSingle().NonLazy();

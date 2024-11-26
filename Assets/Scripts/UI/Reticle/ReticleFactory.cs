@@ -4,15 +4,14 @@ using Zenject;
 
 namespace UI.Reticle
 {
-    public class ReticleFactory : IFactory<Type, BaseReticle>
+    public class ReticleFactory
     {
-        private readonly DiContainer container;
+        private DiContainer container;
         private ScreensService screensService;
         private Transform uiRoot => screensService.CurrentScreen.transform;
 
-        public ReticleFactory(
-            DiContainer container,
-            ScreensService screensService)
+        [Inject]
+        public void Construct(DiContainer container, ScreensService screensService)
         {
             this.container = container;
             this.screensService = screensService;

@@ -1,5 +1,5 @@
 ﻿using Fight.Projectiles;
-using Pool;
+using Pooling;
 using UI.Reticle;
 using Zenject;
 
