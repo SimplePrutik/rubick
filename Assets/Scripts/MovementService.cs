@@ -66,6 +66,9 @@ public class MovementService : IDisposable
                     movingVelocity * Time.deltaTime,
                     playerTransform.position,
                     0);
+                
+                Debug.Log($"acceleration = {acceleration}");
+                Debug.Log($"movingVelocity = {movingVelocity}");
             })
             .AddTo(generalDisposable);
 
@@ -83,6 +86,7 @@ public class MovementService : IDisposable
                 {
                     acceleration = Vector3.down * physicsSettings.GravityStrength;
                 }
+                Debug.Log($"IsLanded = {value}");
             })
             .AddTo(generalDisposable);
         

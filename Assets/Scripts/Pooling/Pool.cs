@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Pooling
 {
@@ -9,10 +11,12 @@ namespace Pooling
         private readonly string PREFAB_PATH;
         private List<T> poolObjects = new List<T>();
         private Transform rootObject;
+        private DiContainer container;
         
-        public Pool(float capacity, Transform rootObject, string prefabPath)
+        public Pool(float capacity, Transform rootObject, string prefabPath, DiContainer container)
         {
             this.rootObject = rootObject;
+            this.container = container;
             PREFAB_PATH = prefabPath;
             rootObject.name = $"{nameof(T)} Pool";
             rootObject.position = POOL_POSITION;
@@ -20,10 +24,10 @@ namespace Pooling
             
             for (int i = 0; i < capacity; ++i)
             {
-                var _poolObject = GameObject.Instantiate(prefab, rootObject);
+                var _poolObject = (T)container.InstantiatePrefabForComponent(typeof(T), prefab, rootObject, Array.Empty<object>());
                 _poolObject.gameObject.SetActive(false);
                 _poolObject.transform.SetParent(rootObject);
-                poolObjects.Add(_poolObject as T);
+                poolObjects.Add(_poolObject);
             }
         }
 
@@ -33,7 +37,7 @@ namespace Pooling
             if (poolObject == null)
             {
                 var prefab = Resources.Load<T>(PREFAB_PATH);
-                poolObject = GameObject.Instantiate(prefab, rootObject);
+                poolObject = (T)container.InstantiatePrefabForComponent(typeof(T), prefab, rootObject, Array.Empty<object>());
                 poolObject.transform.SetParent(rootObject);
                 poolObjects.Add(poolObject);
             }

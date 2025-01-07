@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
         MovementService movementService,
         UnitColliderService unitColliderService,
         AbilityService abilityService,
-        AbilityFactory abilityFactory)
+        AbilityFactory abilityFactory,
+        DiContainer container)
     {
         tpvCameraController.Init(transform, tpvCameraPointer);
         fpvCameraController.Init(transform);
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
         var threeArrow = abilityFactory.Create(typeof(AbilityThreeArrow));
         abilityService.InitAbility(threeArrow);
         
-        var pool = new Pool<Arrow>(30, new GameObject().transform, $"Prefabs/3D/Projectiles/Arrow");
+        var pool = new Pool<Arrow>(30, new GameObject().transform, $"Prefabs/3D/Projectiles/Arrow", container);
         threeArrow.Prepare(pool);
     }
 }

@@ -22,7 +22,8 @@ namespace UI
             var screenType = typeof(T);
             if (screenCache.ContainsKey(screenType))
                 CurrentScreen = screenCache[screenType] as T;
-            CurrentScreen = screensFactory.Create(typeof(T));
+            else
+                CurrentScreen = screensFactory.Create(typeof(T));
             screenCache[screenType] = CurrentScreen;
             CurrentScreen.Show();
         }

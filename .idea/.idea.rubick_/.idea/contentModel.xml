@@ -1316,6 +1316,7 @@
         <e p="Resources" t="Include">
           <e p="Prefabs" t="Include">
             <e p="3D" t="Include">
+              <e p="Maze" t="Include" />
               <e p="Projectiles" t="Include" />
             </e>
             <e p="UI" t="Include">
@@ -1366,8 +1367,10 @@
             <e p="MainInstaller.cs" t="Include" />
           </e>
           <e p="Map" t="Include">
+            <e p="CellObject.cs" t="Include" />
             <e p="EnvironmentObject.cs" t="Include" />
             <e p="Map.cs" t="Include" />
+            <e p="MazeGenerator.cs" t="Include" />
           </e>
           <e p="MovementService.cs" t="Include" />
           <e p="PlayerController.cs" t="Include" />

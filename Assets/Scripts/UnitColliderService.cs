@@ -19,12 +19,7 @@ public class UnitColliderService : IDisposable
             .EveryUpdate()
             .Subscribe(_ =>
             {
-                if (Physics.SphereCast(
-                    bodyTransform.position + Vector3.down * (bodyCollider.height / 2f + SKIN_WIDTH),
-                    SKIN_WIDTH,
-                    Vector3.down,
-                    out var _,
-                    0.1f))
+                if (Physics.Raycast(bodyTransform.position + Vector3.down * (bodyCollider.height / 2f), Vector3.down, 0.1f))
                 {
                     if (!IsLanded.Value)
                         IsLanded.Value = true;
