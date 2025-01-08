@@ -31,6 +31,7 @@ namespace Abilities
         public override void Use()
         {
             base.Use();
+            cooldownTimer.Start();
             var shotRays = reticleService.GetAllShotRays();
             foreach (var ray in shotRays)
             {

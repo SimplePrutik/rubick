@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4368481311910632569}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TPVCameraSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4368481312767531920}
   - component: {fileID: 4368481312767531927}
   - component: {fileID: 2439314701158166480}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpvCameraPointer: {fileID: 4368481312892857938}
   bodyCollider: {fileID: 2439314701158166480}
-  arrowPrefab: {fileID: 5327615079072930833, guid: 460e03ee210ee524f81babe8e4aae33f, type: 3}
 --- !u!136 &2439314701158166480
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -166,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4368481312892857939}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +198,7 @@ GameObject:
   - component: {fileID: 3704716077823472266}
   - component: {fileID: 8974899742775294686}
   - component: {fileID: 3140274798578975824}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

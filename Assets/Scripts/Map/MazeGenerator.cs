@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Map
 {
@@ -31,6 +33,14 @@ namespace Map
         private Cell[,,] maze;
         private List<(CellPoint, CellPoint)> edges = new List<(CellPoint, CellPoint)>();
         private List<List<CellPoint>> forests = new List<List<CellPoint>>();
+
+        [Inject]
+        public void Construct(PlayerController playerController)
+        {
+            Generate();
+            
+            playerController.transform.localPosition = Vector3.zero;
+        }
 
         private void Generate()
         {
@@ -107,6 +117,7 @@ namespace Map
                 var cell = Instantiate(cellPrefab, new Vector3(i * 10f * cellSize.x, j * 10f * cellSize.y, k * 10f * cellSize.z), Quaternion.identity);
                 cell.SetWalls(maze[i, j, k]);
                 cell.SetSize(cellSize);
+                cell.transform.SetParent(transform);
             }
         }
 
@@ -143,11 +154,6 @@ namespace Map
                 maze[cp1.X, cp1.Y, cp1.Z].Left = true;
                 maze[cp2.X, cp2.Y, cp2.Z].Right = true;
             }
-        }
-
-        private void Start()
-        {
-            Generate();
         }
     }
 }

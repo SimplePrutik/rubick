@@ -17,12 +17,13 @@ namespace Abilities
         public CooldownTimer(float cooldownValue)
         {
             this.cooldownValue = cooldownValue;
+            IsOffCooldown.Value = true;
             
             timerDisposable = Observable
                 .EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    if (IsOffCooldown.Value)
+                    if (!IsOffCooldown.Value)
                     {
                         if (remainingTime <= 0)
                             IsOffCooldown.Value = true;
