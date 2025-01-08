@@ -9,6 +9,7 @@ namespace Abilities
     {
         private ReticleService reticleService;
         private Pool<Arrow> arrowPool;
+        private CooldownTimer cooldownTimer;
         public float ProjectileSpeed { get; private set; } = 0.1f;
         
         private float projectilePathLength => ProjectileSpeed * PROJECTILE_TTL;
@@ -21,7 +22,10 @@ namespace Abilities
             this.reticleService = reticleService;
 
             UseButton = ButtonSettings.BasicAttack;
-            cooldown = 0.4f;
+            
+            cooldownTimer = new CooldownTimer(0.4f);
+            
+            conditions.Add(cooldownTimer.IsOffCooldown);
         }
         
         public override void Use()

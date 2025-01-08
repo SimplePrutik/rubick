@@ -10,8 +10,8 @@ public class UnitColliderService : IDisposable
 
     private const int MAX_COLLIDE_BOUNCES = 5;
     private const float SKIN_WIDTH = 0.005f;
-    
-    public ReactiveProperty<bool> IsLanded = new ReactiveProperty<bool>();
+
+    public bool IsLanded { get; private set; }
     public void InitGroundCheck(CapsuleCollider bodyCollider, Transform bodyTransform)
     {
         onGroundedDisposable?.Dispose();
@@ -21,12 +21,10 @@ public class UnitColliderService : IDisposable
             {
                 if (Physics.Raycast(bodyTransform.position + Vector3.down * (bodyCollider.height / 2f), Vector3.down, 0.1f))
                 {
-                    if (!IsLanded.Value)
-                        IsLanded.Value = true;
+                    IsLanded = true;
                     return;
                 }
-                if (IsLanded.Value)
-                    IsLanded.Value = false;
+                IsLanded = false;
             });
     }
 

@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         unitColliderService.InitGroundCheck(bodyCollider, transform);
         movementService.Init(bodyCollider, transform);
         
-        abilityService.InitAbility(abilityFactory.Create(typeof(AbilityJump)));
+        abilityService.InitAbility(abilityFactory.Create(typeof(AbilityJetPack)));
         abilityService.InitAbility(abilityFactory.Create(typeof(AbilityViewChange)));
         var threeArrow = abilityFactory.Create(typeof(AbilityThreeArrow));
         abilityService.InitAbility(threeArrow);

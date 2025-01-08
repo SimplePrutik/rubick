@@ -2,29 +2,23 @@
 
 namespace Abilities
 {
-    public class AbilityJump : Ability
+    public class AbilityJetPack : Ability
     {
         private MovementService movementService;
-        private float jumpHeight;
 
         [Inject]
         public void Construct(
             UnitColliderService unitColliderService,
-            MovementService movementService,
-            CameraService cameraService,
-            PlayerStats playerStats)
+            MovementService movementService)
         {
             this.movementService = movementService;
-            jumpHeight = playerStats.JumpHeight;
-            
-            conditions.AddRange(new []{unitColliderService.IsLanded});
-            cooldown = 1f;
+
             UseButton = ButtonSettings.Jump;
         }
         public override void Use()
         {
             base.Use();
-            movementService.VerticalMovingVelocity = jumpHeight;
+            movementService.SetVerticalAcceleration(40f);
         }
     }
 }

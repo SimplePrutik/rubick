@@ -1337,10 +1337,11 @@
             <e p="AbilityFactory.cs" t="Include" />
             <e p="AbilityService.cs" t="Include" />
             <e p="ConcreteAbilities" t="Include">
-              <e p="AbilityJump.cs" t="Include" />
+              <e p="AbilityJetPack.cs" t="Include" />
               <e p="AbilityThreeArrow.cs" t="Include" />
               <e p="AbilityViewChange.cs" t="Include" />
             </e>
+            <e p="CooldownTimer.cs" t="Include" />
             <e p="IAbility.cs" t="Include" />
           </e>
           <e p="AppStart.cs" t="Include" />

@@ -11,6 +11,7 @@ public class MovementService : IDisposable
     private Vector2 horizontalMovingVelocity;
     private float verticalMovingVelocity;
     private Vector3 acceleration;
+    private Vector3 appliedAcceleration;
     private Vector3 movementVector;
 
     private TpvCameraController tpvCameraController;
@@ -58,6 +59,17 @@ public class MovementService : IDisposable
                     Rotate();
                 }
 
+                if (unitColliderService.IsLanded)
+                {
+                    acceleration = acceleration.ChangeY(Mathf.Max(acceleration.y,0f));
+                    verticalMovingVelocity = Mathf.Max(verticalMovingVelocity, 0f);
+                }
+                else
+                {
+                    acceleration = Vector3.down * physicsSettings.GravityStrength;
+                }
+                acceleration += appliedAcceleration;
+
                 horizontalMovingVelocity += acceleration.ConvertToHorizontalMovement() * Time.deltaTime;
                 verticalMovingVelocity += acceleration.y * Time.deltaTime;
                 movingVelocity = Extensions.ConvertToVolumetricMovement(horizontalMovingVelocity, verticalMovingVelocity);
@@ -67,30 +79,17 @@ public class MovementService : IDisposable
                     playerTransform.position,
                     0);
                 
-                Debug.Log($"acceleration = {acceleration}");
-                Debug.Log($"movingVelocity = {movingVelocity}");
+                appliedAcceleration = Vector3.zero;
             })
             .AddTo(generalDisposable);
 
-        
-        unitColliderService
-            .IsLanded
-            .Subscribe(value =>
-            {
-                if (value)
-                {
-                    acceleration = acceleration.ChangeY(0f);
-                    verticalMovingVelocity = 0f;
-                }
-                else
-                {
-                    acceleration = Vector3.down * physicsSettings.GravityStrength;
-                }
-                Debug.Log($"IsLanded = {value}");
-            })
-            .AddTo(generalDisposable);
-        
         acceleration = Vector3.down * physicsSettings.GravityStrength;
+        appliedAcceleration = Vector3.zero;
+    }
+
+    public void SetVerticalAcceleration(float value)
+    {
+        appliedAcceleration = appliedAcceleration.ChangeY(value);
     }
     
     private void Walk()
