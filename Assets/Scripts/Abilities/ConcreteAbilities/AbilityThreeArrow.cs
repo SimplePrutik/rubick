@@ -10,7 +10,7 @@ namespace Abilities
         private ReticleService reticleService;
         private Pool<Arrow> arrowPool;
         private CooldownTimer cooldownTimer;
-        public float ProjectileSpeed { get; private set; } = 0.1f;
+        public float ProjectileSpeed { get; private set; } = 0.5f;
         
         private float projectilePathLength => ProjectileSpeed * PROJECTILE_TTL;
 

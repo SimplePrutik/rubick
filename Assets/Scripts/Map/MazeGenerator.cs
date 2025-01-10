@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Entities;
+using Extentions;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -26,6 +28,8 @@ namespace Map
             public int Z;
         }
 
+        private EntityController entityController;
+
         [SerializeField] private CellObject cellPrefab;
         [SerializeField] private int mazeSize;
         [SerializeField] private Vector3 cellSize;
@@ -35,8 +39,12 @@ namespace Map
         private List<List<CellPoint>> forests = new List<List<CellPoint>>();
 
         [Inject]
-        public void Construct(PlayerController playerController)
+        public void Construct(
+            PlayerController playerController,
+            EntityController entityController)
         {
+            this.entityController = entityController;
+            entityController.SetRoot(transform);
             Generate();
             
             playerController.transform.localPosition = Vector3.zero;
@@ -114,10 +122,13 @@ namespace Map
             for (var j = 0; j < mazeSize; j++)
             for (var k = 0; k < mazeSize; k++)
             {
-                var cell = Instantiate(cellPrefab, new Vector3(i * 10f * cellSize.x, j * 10f * cellSize.y, k * 10f * cellSize.z), Quaternion.identity);
+                var cellPosition = new Vector3(i * 10f * cellSize.x, j * 10f * cellSize.y, k * 10f * cellSize.z);
+                var cell = Instantiate(cellPrefab, cellPosition, Quaternion.identity);
                 cell.SetWalls(maze[i, j, k]);
                 cell.SetSize(cellSize);
                 cell.transform.SetParent(transform);
+                var dummy = entityController.SpawnEnemy<Dummy>();
+                dummy.transform.position = cellPosition + new Vector3(Random.Range(-2f, 2f), 0f, Random.Range(-2f, 2f));
             }
         }
 

@@ -1316,6 +1316,7 @@
         <e p="Resources" t="Include">
           <e p="Prefabs" t="Include">
             <e p="3D" t="Include">
+              <e p="Enemies" t="Include" />
               <e p="Maze" t="Include" />
               <e p="Projectiles" t="Include" />
             </e>
@@ -1357,6 +1358,16 @@
             </e>
             <e p="CameraService.cs" t="Include" />
           </e>
+          <e p="Entities" t="Include">
+            <e p="Enemies" t="Include">
+              <e p="BaseEnemy.cs" t="Include" />
+              <e p="Dummy.cs" t="Include" />
+              <e p="EnemyFactory.cs" t="Include" />
+            </e>
+            <e p="EntityController.cs" t="Include" />
+            <e p="IDamagable.cs" t="Include" />
+            <e p="PlayerController.cs" t="Include" />
+          </e>
           <e p="Extensions.cs" t="Include" />
           <e p="Fight" t="Include">
             <e p="Projectiles" t="Include">
@@ -1372,8 +1383,8 @@
             <e p="EnvironmentObject.cs" t="Include" />
             <e p="MazeGenerator.cs" t="Include" />
           </e>
-          <e p="MovementService.cs" t="Include" />
-          <e p="PlayerController.cs" t="Include" />
+          <e p="MovementGravityController.cs" t="Include" />
+          <e p="PlayerMovementController.cs" t="Include" />
           <e p="Pooling" t="Include">
             <e p="Pool.cs" t="Include" />
             <e p="PoolObject.cs" t="Include" />

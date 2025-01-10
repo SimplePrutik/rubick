@@ -4,21 +4,23 @@ namespace Abilities
 {
     public class AbilityJetPack : Ability
     {
-        private MovementService movementService;
+        private PlayerMovementController playerMovementController;
 
         [Inject]
-        public void Construct(
-            UnitColliderService unitColliderService,
-            MovementService movementService)
+        public void Construct()
         {
-            this.movementService = movementService;
-
             UseButton = ButtonSettings.Jump;
         }
+
+        public void Init(PlayerMovementController playerMovementController)
+        {
+            this.playerMovementController = playerMovementController;
+        }
+        
         public override void Use()
         {
             base.Use();
-            movementService.SetVerticalAcceleration(40f);
+            playerMovementController.AddVerticalAcceleration(40f);
         }
     }
 }

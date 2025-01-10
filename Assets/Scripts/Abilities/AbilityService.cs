@@ -13,6 +13,7 @@ namespace Abilities
         {
             var abilityDisposable = Observable
                 .EveryUpdate()
+                .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {
                     if (Input.GetKey(ability.UseButton))

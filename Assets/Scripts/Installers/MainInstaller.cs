@@ -1,7 +1,6 @@
-using System;
 using Abilities;
-using Fight.Projectiles;
-using Pooling;
+using Entities;
+using Extentions;
 using ScriptableObjects;
 using UI;
 using UI.Reticle;
@@ -22,14 +21,15 @@ public class MainInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<ScreensFactory>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ReticleFactory>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AbilityFactory>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle().NonLazy();
         
         Container.BindInterfacesAndSelfTo<ScreensService>().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<MovementService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AbilityService>().AsSingle().NonLazy();
-        Container.BindInterfacesAndSelfTo<UnitColliderService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<ReticleService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraService>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<UnitColliderService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AppStart>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<EntityController>().AsSingle().NonLazy();
         
         Container.Bind<TpvCameraController>().FromComponentInNewPrefab(tpvCameraController).AsSingle().NonLazy();
         Container.Bind<FpvCameraController>().FromComponentInNewPrefab(fpvCameraController).AsSingle().NonLazy();

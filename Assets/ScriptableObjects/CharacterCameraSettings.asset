@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CharacterCameraSettings
   m_EditorClassIdentifier: 
   TPVCameraPosition: {x: 0, y: 0.73, z: -6}
-  FPVCameraPosition: {x: 0, y: 0.046, z: 0.73}
+  FPVCameraPosition: {x: 0, y: 0.046, z: 0.1}
   TPVCameraRotation: {x: 15, y: 0, z: 0}
   FPVCameraRotation: {x: 0, y: 0, z: 0}

@@ -4,7 +4,7 @@ namespace Pooling
 {
     public class PoolObject : MonoBehaviour
     {
-        protected void Despawn()
+        protected virtual void Despawn()
         {
             gameObject.SetActive(false);
             transform.localPosition = Vector3.zero;

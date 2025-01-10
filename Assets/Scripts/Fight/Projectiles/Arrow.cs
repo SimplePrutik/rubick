@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
+using Entities;
+using Map;
 using UniRx;
 using UnityEngine;
 
@@ -9,6 +12,7 @@ namespace Fight.Projectiles
     {
         private Tween projectileTween;
         private Vector3 velocity;
+        private float damage = 0.5f;
 
         private IDisposable ttlDisposable;
         private IDisposable motionDisposable;
@@ -23,19 +27,39 @@ namespace Fight.Projectiles
             motionDisposable = Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    var collideCheck = unitColliderService.CollideAndStuck(bodyCollider, velocity, transform.position, stuckDistance);
+                    var collideCheck = unitColliderService.CollideAndStuck(
+                        bodyCollider, velocity, transform.position, stuckDistance, new List<Type>{typeof(EnvironmentObject), typeof(BaseEnemy)});
                     transform.position += collideCheck.velocity;
-                    if (collideCheck.isCollided)
+                    
+                    if (collideCheck.hit == null)
+                        return;
+                    
+                    if (collideCheck.hit.GetComponent<EnvironmentObject>() != null)
+                    {
                         motionDisposable.Dispose();
+                        return;
+                    }
+                    
+                    var enemy = collideCheck.hit.GetComponent<BaseEnemy>();
+                    if (enemy != null)
+                    {
+                        Despawn();
+                        enemy.TakeDamage(damage, 0);
+                    }
                 });
 
             ttlDisposable = Observable.Timer(TimeSpan.FromSeconds(projectileTtl))
                 .Subscribe(_ =>
                 {
-                    motionDisposable?.Dispose();
-                    ttlDisposable?.Dispose();
                     Despawn();
                 });
+        }
+
+        protected override void Despawn()
+        {
+            motionDisposable?.Dispose();
+            ttlDisposable?.Dispose();
+            base.Despawn();
         }
     }
 }
