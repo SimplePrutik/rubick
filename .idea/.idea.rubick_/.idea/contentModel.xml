@@ -1314,6 +1314,7 @@
           </e>
         </e>
         <e p="Resources" t="Include">
+          <e p="Fonts" t="Include" />
           <e p="Prefabs" t="Include">
             <e p="3D" t="Include">
               <e p="Enemies" t="Include" />
@@ -1358,6 +1359,7 @@
             </e>
             <e p="CameraService.cs" t="Include" />
           </e>
+          <e p="DamageIndicatorController.cs" t="Include" />
           <e p="Entities" t="Include">
             <e p="Enemies" t="Include">
               <e p="BaseEnemy.cs" t="Include" />
@@ -1375,6 +1377,7 @@
               <e p="BaseProjectile.cs" t="Include" />
             </e>
           </e>
+          <e p="Indicator.cs" t="Include" />
           <e p="Installers" t="Include">
             <e p="MainInstaller.cs" t="Include" />
           </e>
@@ -1385,10 +1388,12 @@
           </e>
           <e p="MovementGravityController.cs" t="Include" />
           <e p="PlayerMovementController.cs" t="Include" />
+          <e p="PlayerStatsController.cs" t="Include" />
           <e p="Pooling" t="Include">
             <e p="Pool.cs" t="Include" />
             <e p="PoolObject.cs" t="Include" />
           </e>
+          <e p="RewardService.cs" t="Include" />
           <e p="ScriptableObjects" t="Include">
             <e p="CameraSettings.cs" t="Include" />
             <e p="PhysicsSettings.cs" t="Include" />

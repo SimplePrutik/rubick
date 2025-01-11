@@ -12,13 +12,12 @@ namespace Fight.Projectiles
     {
         private Tween projectileTween;
         private Vector3 velocity;
-        private float damage = 0.5f;
 
         private IDisposable ttlDisposable;
         private IDisposable motionDisposable;
         
         private BoxCollider bodyCollider => collider as BoxCollider;
-        public void Launch(Vector3 finishPoint, float projectileTtl, float projectileSpeed)
+        public void Launch(Vector3 finishPoint, float projectileTtl, float projectileSpeed, float damage)
         {
             transform.LookAt(finishPoint);
             velocity = transform.forward * projectileSpeed;
@@ -27,22 +26,28 @@ namespace Fight.Projectiles
             motionDisposable = Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    var collideCheck = unitColliderService.CollideAndStuck(
-                        bodyCollider, velocity, transform.position, stuckDistance, new List<Type>{typeof(EnvironmentObject), typeof(BaseEnemy)});
-                    transform.position += collideCheck.velocity;
+                    var nextVelocity = unitColliderService.CollideAndStuck(
+                        bodyCollider, 
+                        velocity, 
+                        transform.position, 
+                        stuckDistance, 
+                        new List<Type>{typeof(EnvironmentObject), typeof(BaseEnemy)},
+                        out var collisionInfo);
+                    transform.position += nextVelocity;
                     
-                    if (collideCheck.hit == null)
+                    if (collisionInfo.Hit == null)
                         return;
                     
-                    if (collideCheck.hit.GetComponent<EnvironmentObject>() != null)
+                    if (collisionInfo.Hit.GetComponent<EnvironmentObject>() != null)
                     {
                         motionDisposable.Dispose();
                         return;
                     }
                     
-                    var enemy = collideCheck.hit.GetComponent<BaseEnemy>();
+                    var enemy = collisionInfo.Hit.GetComponent<BaseEnemy>();
                     if (enemy != null)
                     {
+                        OnHit.Execute(collisionInfo);
                         Despawn();
                         enemy.TakeDamage(damage, 0);
                     }

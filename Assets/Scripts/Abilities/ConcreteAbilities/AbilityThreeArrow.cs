@@ -1,6 +1,7 @@
 ﻿using Fight.Projectiles;
 using Pooling;
 using UI.Reticle;
+using UniRx;
 using Zenject;
 
 namespace Abilities
@@ -8,18 +9,24 @@ namespace Abilities
     public class AbilityThreeArrow : Ability
     {
         private ReticleService reticleService;
+        private DamageIndicatorController damageIndicatorController;
         private Pool<Arrow> arrowPool;
         private CooldownTimer cooldownTimer;
-        public float ProjectileSpeed { get; private set; } = 0.5f;
         
-        private float projectilePathLength => ProjectileSpeed * PROJECTILE_TTL;
+        private float projectileSpeed = 0.5f;
+        private float damage = 2f;
+        
+        private float projectilePathLength => projectileSpeed * PROJECTILE_TTL;
 
         private const float PROJECTILE_TTL = 5f;
 
         [Inject]
-        public void Construct(ReticleService reticleService)
+        public void Construct(
+            ReticleService reticleService,
+            DamageIndicatorController damageIndicatorController)
         {
             this.reticleService = reticleService;
+            this.damageIndicatorController = damageIndicatorController;
 
             UseButton = ButtonSettings.BasicAttack;
             
@@ -37,7 +44,14 @@ namespace Abilities
             {
                 var arrow = arrowPool.Spawn(ray.origin);
                 var finishPoint = ray.origin + ray.direction.normalized * projectilePathLength;
-                arrow.Launch(finishPoint, PROJECTILE_TTL, ProjectileSpeed);
+                arrow.Launch(finishPoint, PROJECTILE_TTL, projectileSpeed, damage);
+                arrow.OnHit
+                    .Subscribe(collisionInfo =>
+                    {
+                        damageIndicatorController.SpawnIndicator(damage, collisionInfo.Hit,
+                            collisionInfo.CollisionPosition);
+                    })
+                    .AddTo(arrow);
             }
         }
 

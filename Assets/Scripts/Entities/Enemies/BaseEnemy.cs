@@ -6,8 +6,8 @@ namespace Entities
 {
     public abstract class BaseEnemy : MonoBehaviour, IDamagable
     {
-        protected float health = 10f;
-        protected float reward;
+        protected float health = 20f;
+        protected int reward;
         
         public ReactiveCommand OnDead = new ReactiveCommand();
 
@@ -18,10 +18,14 @@ namespace Entities
                 Die();
         }
 
+        //make own class for reward
+        public virtual int GetReward() => reward;
+
         protected virtual void Die()
         {
             OnDead.Execute();
             gameObject.SetActive(false);
         }
+        
     }
 }

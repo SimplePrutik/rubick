@@ -7,6 +7,12 @@ using UnityEngine;
 
 public class UnitColliderService : IDisposable
 {
+    public struct CollisionInfo
+    {
+        public Transform Hit;
+        public Vector3 CollisionPosition;
+    }
+    
     private CompositeDisposable triggerColliderDisposable = new CompositeDisposable();
 
     private const int MAX_COLLIDE_BOUNCES = 5;
@@ -45,8 +51,13 @@ public class UnitColliderService : IDisposable
         return velocity;
     }
     
-    public (Vector3 velocity, Transform hit) CollideAndStuck(
-        BoxCollider bodyCollider, Vector3 velocity, Vector3 position, float depthOfStuck, List<Type> collisionTypes)
+    public Vector3 CollideAndStuck(
+        BoxCollider bodyCollider, 
+        Vector3 velocity, 
+        Vector3 position, 
+        float depthOfStuck, 
+        List<Type> collisionTypes, 
+        out CollisionInfo collisionInfo)
     {
         var distance = velocity.magnitude;
         var halfExtents = bodyCollider.bounds.extents;
@@ -58,11 +69,13 @@ public class UnitColliderService : IDisposable
             if (collisionType != null)
             {
                 var snapToSurface = velocity.normalized * hit.distance;
-                return (snapToSurface, hit.transform);
+                collisionInfo = new CollisionInfo {Hit = hit.transform, CollisionPosition = position + snapToSurface};
+                return snapToSurface;
             }
         }
-        
-        return (velocity, null);
+
+        collisionInfo = new CollisionInfo {Hit = null, CollisionPosition = Vector3.zero};
+        return velocity;
     }
 
     public void Dispose()

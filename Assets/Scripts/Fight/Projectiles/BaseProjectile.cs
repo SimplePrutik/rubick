@@ -1,4 +1,5 @@
 ﻿using Pooling;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,8 @@ namespace Fight.Projectiles
         protected UnitColliderService unitColliderService;
         
         [SerializeField] protected Collider collider;
+        
+        public ReactiveCommand<UnitColliderService.CollisionInfo> OnHit = new ReactiveCommand<UnitColliderService.CollisionInfo>();
 
         [Inject]
         public void Construct(UnitColliderService unitColliderService)

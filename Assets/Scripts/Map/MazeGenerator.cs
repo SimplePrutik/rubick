@@ -41,13 +41,15 @@ namespace Map
         [Inject]
         public void Construct(
             PlayerController playerController,
-            EntityController entityController)
+            EntityController entityController,
+            DamageIndicatorController damageIndicatorController)
         {
             this.entityController = entityController;
             entityController.SetRoot(transform);
             Generate();
             
             playerController.transform.localPosition = Vector3.zero;
+            damageIndicatorController.Root = transform;
         }
 
         private void Generate()

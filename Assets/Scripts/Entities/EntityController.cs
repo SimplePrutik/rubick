@@ -1,22 +1,38 @@
-﻿using Entities;
+﻿using System;
+using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace Extentions
+namespace Entities
 {
     public class EntityController
     {
         private EnemyFactory enemyFactory;
+        private RewardService rewardService;
+
+        private Dictionary<BaseEnemy, IDisposable> enemies = new Dictionary<BaseEnemy, IDisposable>();
         
         [Inject]
-        public void Construct(EnemyFactory enemyFactory)
+        public void Construct(
+            EnemyFactory enemyFactory,
+            RewardService rewardService)
         {
+            this.rewardService = rewardService;
             this.enemyFactory = enemyFactory;
         }
 
         public BaseEnemy SpawnEnemy<T>() where T : BaseEnemy
         {
-            return enemyFactory.Create(typeof(T));
+            var enemy = enemyFactory.Create(typeof(T));
+            enemies[enemy] = enemy.OnDead
+                .Subscribe(_ =>
+                {
+                    rewardService.GiveReward(enemy.GetReward());
+                    enemies[enemy].Dispose();
+                    enemies.Remove(enemy);
+                });
+            return enemy;
         }
 
         public void SetRoot(Transform root)
