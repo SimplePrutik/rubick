@@ -1,6 +1,7 @@
 ﻿using System;
 using Entities;
 using Extentions;
+using Pooling;
 using UnityEngine;
 using Zenject;
 
@@ -8,8 +9,8 @@ public class DamageIndicatorController
 {
     private DiContainer container;
     private FpvCameraController fpvCameraController;
-
-    public RectTransform Root { get; set; }
+    private Pool<Indicator> pool;
+    private RectTransform root;
     
     [Inject]
     public void Construct(
@@ -20,12 +21,16 @@ public class DamageIndicatorController
         this.container = container;
         this.fpvCameraController = fpvCameraController;
     }
+
+    public void Init(RectTransform root)
+    {
+        this.root = root;
+        pool = new Pool<Indicator>(30, this.root, "Prefabs/UI/Indicator", container);
+    }
     
     public void SpawnIndicator(float value, Vector3 spawnPosition)
     {
-        var prefab = Resources.Load("Prefabs/UI/Indicator");
-        var indicator = (Indicator)container.InstantiatePrefabForComponent(typeof(Indicator), prefab, Root, Array.Empty<object>());
-        indicator.GetComponent<RectTransform>().anchoredPosition = fpvCameraController.Camera.GetPositionOnScreen(spawnPosition, Root);
+        var indicator = pool.SpawnRectTransform(fpvCameraController.Camera.GetPositionOnScreen(spawnPosition, root));
         indicator.Init(value.ToString(), spawnPosition, fpvCameraController);
     }
 }

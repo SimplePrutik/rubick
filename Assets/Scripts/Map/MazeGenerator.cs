@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace Map
 {
+    //REFACTOR
     public class MazeGenerator : MonoBehaviour
     {
         public struct Cell
@@ -75,22 +76,12 @@ namespace Map
 
             foreach (var edge in edges)
             {
-                // Debug.Log("////// FORESTS ///////");
-                // foreach (var forest in forests)
-                // {
-                //     Debug.Log(string.Join(", ", forest.Select(cell => $"({cell.X}, {cell.Y}, {cell.Z})").ToList()));
-                // }
-                // Debug.Log("////// FORESTS ///////");
-            
                 var forest1 = forests.Find(forest => forest.Contains(edge.Item1));
                 var forest2 = forests.Find(forest => forest.Contains(edge.Item2));
                 if (forest1 != null)
                 {
                     if (forest2 == forest1)
-                    {
-                        // Debug.Log($"Edge ({edge.Item1.X}, {edge.Item1.Y}, {edge.Item1.Z}) - ({edge.Item2.X}, {edge.Item2.Y}, {edge.Item2.Z}) : Denied");
                         continue;
-                    }
                     if (forest2 == null)
                     {
                         forest1.Add(edge.Item2);
@@ -114,7 +105,6 @@ namespace Map
                 }
 
                 SetPassage(edge.Item1, edge.Item2);
-                // Debug.Log($"Edge ({edge.Item1.X}, {edge.Item1.Y}, {edge.Item1.Z}) - ({edge.Item2.X}, {edge.Item2.Y}, {edge.Item2.Z}) : Accepted");
             }
         
         

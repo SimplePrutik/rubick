@@ -13,12 +13,11 @@ namespace Pooling
         private Transform rootObject;
         private DiContainer container;
         
-        public Pool(float capacity, Transform rootObject, string prefabPath, DiContainer container)
+        public Pool(int capacity, Transform rootObject, string prefabPath, DiContainer container)
         {
             this.rootObject = rootObject;
             this.container = container;
             PREFAB_PATH = prefabPath;
-            rootObject.name = $"{nameof(T)} Pool";
             rootObject.position = POOL_POSITION;
             var prefab = Resources.Load<T>(prefabPath);
             
@@ -31,7 +30,21 @@ namespace Pooling
             }
         }
 
-        public T Spawn(Vector3 position)
+        public T SpawnTransform(Vector3 position)
+        {
+            var poolObject = SpawnObject();
+            poolObject.transform.position = position;
+            return poolObject;
+        }
+
+        public T SpawnRectTransform(Vector2 position)
+        {
+            var poolObject = SpawnObject();
+            poolObject.GetComponent<RectTransform>().anchoredPosition = position;
+            return poolObject;
+        }
+
+        private T SpawnObject()
         {
             var poolObject = poolObjects.Find(obj => !obj.gameObject.activeSelf);
             if (poolObject == null)
@@ -41,8 +54,8 @@ namespace Pooling
                 poolObject.transform.SetParent(rootObject);
                 poolObjects.Add(poolObject);
             }
-            poolObject.transform.position = position;
             poolObject.gameObject.SetActive(true);
+            poolObject.OnSpawn();
             return poolObject;
         }
     }

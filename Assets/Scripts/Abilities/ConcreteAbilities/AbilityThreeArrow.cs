@@ -41,10 +41,9 @@ namespace Abilities
             base.Use();
             cooldownTimer.Start();
             var shotRays = reticleService.GetAllShotRays();
-            shotRays = shotRays.Take(1).ToList();
             foreach (var ray in shotRays)
             {
-                var arrow = arrowPool.Spawn(ray.origin);
+                var arrow = arrowPool.SpawnTransform(ray.origin);
                 var finishPoint = ray.origin + ray.direction.normalized * projectilePathLength;
                 arrow.Launch(finishPoint, PROJECTILE_TTL, projectileSpeed, damage);
                 arrow.OnHit
@@ -52,7 +51,7 @@ namespace Abilities
                     {
                         damageIndicatorController.SpawnIndicator(damage, collisionPosition);
                     })
-                    .AddTo(arrow);
+                    .AddTo(arrow.ProjectileDisposable);
             }
         }
 

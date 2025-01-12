@@ -1,11 +1,12 @@
 ﻿using System;
 using Extentions;
+using Pooling;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Indicator : MonoBehaviour
+public class Indicator : PoolObject
 {
     [SerializeField] private TMP_Text content;
 
@@ -31,17 +32,19 @@ public class Indicator : MonoBehaviour
                     new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0.7f, 0.9f), Random.Range(-0.5f, 0.5f))
                         .normalized * Time.deltaTime;
                 var screenPoint = fpvCameraController.Camera.GetPositionOnScreen(currentPosition, parentRect);
-                Debug.Log(screenPoint);
+                //make slight scaling with font size and distance to target
                 rect.anchoredPosition = screenPoint;
             });
 
         Observable
             .Timer(TimeSpan.FromSeconds(2f))
-            .Subscribe(_ => Destroy(gameObject));
+            .Subscribe(_ => Despawn());
     }
 
-    private void OnDestroy()
+    protected override void Despawn()
     {
         lifeCycleDisposable?.Dispose();
+        gameObject.SetActive(false);
+        rect.anchoredPosition = Vector2.one * -10000f;
     }
 }

@@ -12,6 +12,7 @@ namespace UI
         private DamageIndicatorController damageIndicatorController;
 
         [SerializeField] private TMP_Text goldValue;
+        [SerializeField] private RectTransform indicatorPoolRoot;
         
         [Inject]
         public void Construct(
@@ -20,7 +21,7 @@ namespace UI
         {
             this.reticleService = reticleService;
 
-            damageIndicatorController.Root = GetComponent<RectTransform>();
+            damageIndicatorController.Init(indicatorPoolRoot);
         }
 
         public override void Show()
