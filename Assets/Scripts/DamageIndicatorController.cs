@@ -1,29 +1,31 @@
 ﻿using System;
 using Entities;
+using Extentions;
 using UnityEngine;
 using Zenject;
 
 public class DamageIndicatorController
 {
     private DiContainer container;
-    private PlayerController playerController;
+    private FpvCameraController fpvCameraController;
 
-    public Transform Root;
+    public RectTransform Root { get; set; }
     
     [Inject]
     public void Construct(
         DiContainer container,
-        PlayerController playerController)
+        PlayerController playerController,
+        FpvCameraController fpvCameraController)
     {
         this.container = container;
-        this.playerController = playerController;
+        this.fpvCameraController = fpvCameraController;
     }
     
-    public void SpawnIndicator(float value, Transform enemy, Vector3 spawnPosition)
+    public void SpawnIndicator(float value, Vector3 spawnPosition)
     {
-        var prefab = Resources.Load("Prefabs/Indicator");
+        var prefab = Resources.Load("Prefabs/UI/Indicator");
         var indicator = (Indicator)container.InstantiatePrefabForComponent(typeof(Indicator), prefab, Root, Array.Empty<object>());
-        indicator.transform.position = spawnPosition;
-        indicator.Init(value.ToString(), playerController.transform);
+        indicator.GetComponent<RectTransform>().anchoredPosition = fpvCameraController.Camera.GetPositionOnScreen(spawnPosition, Root);
+        indicator.Init(value.ToString(), spawnPosition, fpvCameraController);
     }
 }

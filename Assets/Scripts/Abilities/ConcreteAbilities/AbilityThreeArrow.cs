@@ -1,4 +1,5 @@
-﻿using Fight.Projectiles;
+﻿using System.Linq;
+using Fight.Projectiles;
 using Pooling;
 using UI.Reticle;
 using UniRx;
@@ -40,16 +41,16 @@ namespace Abilities
             base.Use();
             cooldownTimer.Start();
             var shotRays = reticleService.GetAllShotRays();
+            shotRays = shotRays.Take(1).ToList();
             foreach (var ray in shotRays)
             {
                 var arrow = arrowPool.Spawn(ray.origin);
                 var finishPoint = ray.origin + ray.direction.normalized * projectilePathLength;
                 arrow.Launch(finishPoint, PROJECTILE_TTL, projectileSpeed, damage);
                 arrow.OnHit
-                    .Subscribe(collisionInfo =>
+                    .Subscribe(collisionPosition =>
                     {
-                        damageIndicatorController.SpawnIndicator(damage, collisionInfo.Hit,
-                            collisionInfo.CollisionPosition);
+                        damageIndicatorController.SpawnIndicator(damage, collisionPosition);
                     })
                     .AddTo(arrow);
             }

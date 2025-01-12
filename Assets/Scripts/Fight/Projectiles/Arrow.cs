@@ -47,7 +47,7 @@ namespace Fight.Projectiles
                     var enemy = collisionInfo.Hit.GetComponent<BaseEnemy>();
                     if (enemy != null)
                     {
-                        OnHit.Execute(collisionInfo);
+                        OnHit.Execute(collisionInfo.CollisionPosition);
                         Despawn();
                         enemy.TakeDamage(damage, 0);
                     }

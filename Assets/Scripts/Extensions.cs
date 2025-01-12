@@ -28,5 +28,11 @@ namespace Extentions
         {
             return new Vector3(value.x, value.y, z);
         }
+
+        public static Vector2 GetPositionOnScreen(this Camera camera, Vector3 worldPosition, RectTransform screen)
+        {
+            var relativePos = camera.WorldToViewportPoint(worldPosition);
+            return new Vector2(relativePos.x * screen.sizeDelta.x, relativePos.y * screen.sizeDelta.y);
+        }
     }
 }

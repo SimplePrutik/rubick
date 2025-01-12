@@ -49,7 +49,6 @@ namespace Map
             Generate();
             
             playerController.transform.localPosition = Vector3.zero;
-            damageIndicatorController.Root = transform;
         }
 
         private void Generate()

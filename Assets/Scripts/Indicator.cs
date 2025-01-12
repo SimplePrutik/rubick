@@ -1,26 +1,38 @@
 ﻿using System;
+using Extentions;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Indicator : MonoBehaviour
 {
     [SerializeField] private TMP_Text content;
 
+    private RectTransform rect;
+    private RectTransform parentRect;
+    private Vector3 currentPosition;
+
     private IDisposable lifeCycleDisposable;
 
-    public void Init(string value, Transform rootObject)
+    public void Init(string value, Vector3 worldPosition, FpvCameraController fpvCameraController)
     {
         content.text = value;
-        content.fontSize = Vector3.Distance(transform.position, rootObject.position) * 0.5f;
+        rect = GetComponent<RectTransform>();
+        parentRect = transform.parent.GetComponent<RectTransform>();
+        currentPosition = worldPosition;
 
         lifeCycleDisposable = Observable
             .EveryUpdate()
             .Subscribe(_ =>
             {
-                transform.LookAt(rootObject);
-                content.fontSize = Vector3.Distance(transform.position, rootObject.position) * 0.5f;
-                transform.position += Vector3.one * Time.deltaTime;
+                //make proper easing
+                currentPosition +=
+                    new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0.7f, 0.9f), Random.Range(-0.5f, 0.5f))
+                        .normalized * Time.deltaTime;
+                var screenPoint = fpvCameraController.Camera.GetPositionOnScreen(currentPosition, parentRect);
+                Debug.Log(screenPoint);
+                rect.anchoredPosition = screenPoint;
             });
 
         Observable

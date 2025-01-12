@@ -11,7 +11,7 @@ namespace Fight.Projectiles
         
         [SerializeField] protected Collider collider;
         
-        public ReactiveCommand<UnitColliderService.CollisionInfo> OnHit = new ReactiveCommand<UnitColliderService.CollisionInfo>();
+        public ReactiveCommand<Vector3> OnHit = new ReactiveCommand<Vector3>();
 
         [Inject]
         public void Construct(UnitColliderService unitColliderService)
