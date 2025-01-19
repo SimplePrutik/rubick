@@ -1,6 +1,7 @@
 ﻿using Abilities;
 using TMPro;
 using UI.Reticle;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -17,11 +18,16 @@ namespace UI
         [Inject]
         public void Construct(
             ReticleService reticleService,
-            DamageIndicatorController damageIndicatorController)
+            DamageIndicatorController damageIndicatorController,
+            PlayerStatsController playerStatsController)
         {
             this.reticleService = reticleService;
 
             damageIndicatorController.Init(indicatorPoolRoot);
+
+            playerStatsController.GoldCollected
+                .Subscribe(value => { goldValue.text = value.ToString(); })
+                .AddTo(this);
         }
 
         public override void Show()

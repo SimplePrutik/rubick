@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 8609766899348405581, guid: ed1f5b3823c8cc147aa62f351894909d, type: 3}
-  mazeSize: 10
+  mazeSize: 5
   cellSize: {x: 1, y: 1, z: 1}
 --- !u!4 &1837623125
 Transform:

@@ -1,46 +1,77 @@
+using System;
+using System.Collections.Generic;
 using Abilities;
-using Fight.Projectiles;
-using Pooling;
+using Extentions;
+using Movement;
 using ScriptableObjects;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
 namespace Entities
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IEntity
     {
+        private UnitMovementController unitMovementController;
+        private GroundGravityController groundGravityController;
+        
         [SerializeField] private GameObject tpvCameraPointer;
         [SerializeField] private CapsuleCollider bodyCollider;
+
+        private List<Ability> innateAbilites = new List<Ability>();
 
         [Inject]
         public void Construct(
             TpvCameraController tpvCameraController,
             FpvCameraController fpvCameraController,
             CameraService cameraService,
-            AbilityService abilityService,
             AbilityFactory abilityFactory,
-            PhysicsSettings physicsSettings,
+            PlayerStats playerStats, 
+            PhysicsSettings physicsSettings, 
+            PlayerMovementService playerMovementService,
             UnitColliderService unitColliderService,
-            PlayerStats playerStats,
+            AbilityService abilityService,
             DiContainer container)
         {
             tpvCameraController.Init(transform, tpvCameraPointer);
             fpvCameraController.Init(transform);
 
             cameraService.SetActiveCamera<FpvCameraController>();
-            
-            var playerMovementController = new PlayerMovementController(tpvCameraController, 
-                fpvCameraController, physicsSettings, playerStats, unitColliderService, bodyCollider, transform);
 
-            var jetPack = abilityFactory.Create(typeof(AbilityJetPack));
-            ((AbilityJetPack) jetPack).Init(playerMovementController);
-            abilityService.InitAbility(jetPack);
-            abilityService.InitAbility(abilityFactory.Create(typeof(AbilityViewChange)));
-            var threeArrow = abilityFactory.Create(typeof(AbilityThreeArrow));
-            abilityService.InitAbility(threeArrow);
-        
-            var pool = new Pool<Arrow>(30, new GameObject().transform, $"Prefabs/3D/Projectiles/Arrow", container);
-            threeArrow.Prepare(pool);
+            unitMovementController = new UnitMovementController(unitColliderService);
+            groundGravityController = new GroundGravityController(physicsSettings, unitColliderService, transform, bodyCollider);
+
+            PrepareInnateAbilities(abilityFactory, abilityService);
+            PrepareMovementController(groundGravityController, playerMovementService);
+        }
+
+        private void PrepareInnateAbilities(AbilityFactory abilityFactory, AbilityService abilityService)
+        {
+            var jetPack = abilityFactory.GetAbility<AbilityJetPack>();
+            ((AbilityJetPack)jetPack).Prepare(unitMovementController, groundGravityController);
+            innateAbilites.Add(jetPack);
+            abilityService.EnableAbility(jetPack);
+            // innateAbilites.Add(abilityFactory.GetAbility<AbilityViewChange>());
+        }
+
+        private void PrepareMovementController(GroundGravityController groundGravityController, PlayerMovementService playerMovementService)
+        {
+            Observable
+                .EveryUpdate()
+                .ObserveOnMainThread()
+                .Subscribe(_ =>
+                {
+                    unitMovementController.AddMovementForce(playerMovementService.GetForce(transform));
+                    unitMovementController.AddMovementForce(groundGravityController.GetForce());
+                    transform.position += unitMovementController.DeltaMovement(bodyCollider, transform.position);
+                    transform.localRotation = playerMovementService.GetRotation(transform);
+                })
+                .AddTo(this);
+        }
+
+        public int GetId()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

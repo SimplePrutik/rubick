@@ -9,22 +9,37 @@ namespace Abilities
     {
         private List<IDisposable> abilityDisposables = new List<IDisposable>();
         
-        public IDisposable InitAbility(Ability ability)
+        public IDisposable EnableAbility(Ability ability)
         {
             var abilityDisposable = Observable
                 .EveryUpdate()
                 .ObserveOnMainThread()
                 .Subscribe(_ =>
                 {
-                    if (Input.GetKey(ability.UseButton))
+                    if (!ability.AreConditionsMet())
+                        return;
+                    switch (ability.abilityType)
                     {
-                        ability.CheckAndUse();
+                        case Ability.AbilityType.Tap:
+                        case Ability.AbilityType.Hold:
+                            if (Input.GetKey(ability.UseButton))
+                            {
+                                ability.Use();
+                            }
+                            break;
+                        case Ability.AbilityType.ChargeAndHold:
+                        case Ability.AbilityType.ChargeAndTap:
+                            if (Input.GetKey(ability.UseButton))
+                            {
+                                ability.Charge();
+                            }
+                            break;
                     }
                 });
             return abilityDisposable;
         }
 
-        public void RemoveAbility(IDisposable disposable)
+        public void DisableAbility(IDisposable disposable)
         {
             disposable?.Dispose();
             abilityDisposables.Remove(disposable);

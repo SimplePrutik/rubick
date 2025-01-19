@@ -1,26 +1,31 @@
-﻿using Zenject;
+﻿using Movement;
+using UnityEngine;
+using Zenject;
 
 namespace Abilities
 {
     public class AbilityJetPack : Ability
     {
-        private PlayerMovementController playerMovementController;
+        private UnitMovementController unitMovementController;
+        private GroundGravityController groundGravityController;
 
         [Inject]
         public void Construct()
         {
             UseButton = ButtonSettings.Jump;
-        }
-
-        public void Init(PlayerMovementController playerMovementController)
-        {
-            this.playerMovementController = playerMovementController;
+            abilityType = AbilityType.Hold;
         }
         
         public override void Use()
         {
             base.Use();
-            playerMovementController.AddVerticalAcceleration(40f);
+            groundGravityController.ExteriorForce = -0.15f;
+        }
+
+        public void Prepare(UnitMovementController unitMovementController, GroundGravityController groundGravityController)
+        {
+            this.unitMovementController = unitMovementController;
+            this.groundGravityController = groundGravityController;
         }
     }
 }

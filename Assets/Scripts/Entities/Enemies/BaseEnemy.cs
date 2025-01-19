@@ -4,10 +4,18 @@ using UnityEngine;
 
 namespace Entities
 {
-    public abstract class BaseEnemy : MonoBehaviour, IDamagable
+    public abstract class BaseEnemy : MonoBehaviour, IDamagable, IEntity
     {
+        public enum EnemyState
+        {
+            Idle,
+            Attack,
+            Dead
+        }
+
+        protected int Id;
         protected float health = 20f;
-        protected int reward;
+        protected int reward = 1;
         
         public ReactiveCommand OnDead = new ReactiveCommand();
 
@@ -26,6 +34,10 @@ namespace Entities
             OnDead.Execute();
             gameObject.SetActive(false);
         }
-        
+
+        public int GetId()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

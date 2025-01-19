@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities;
-using Extentions;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Map
 {
-    //REFACTOR
     public class MazeGenerator : MonoBehaviour
     {
         public struct Cell
@@ -118,8 +116,8 @@ namespace Map
                 cell.SetWalls(maze[i, j, k]);
                 cell.SetSize(cellSize);
                 cell.transform.SetParent(transform);
-                var dummy = entityController.SpawnEnemy<Dummy>();
-                dummy.transform.position = cellPosition + new Vector3(Random.Range(-2f, 2f), 0f, Random.Range(-2f, 2f));
+                // var dummy = entityController.SpawnEnemy<Dummy>();
+                // dummy.transform.position = cellPosition + new Vector3(Random.Range(-2f, 2f), 0f, Random.Range(-2f, 2f));
             }
         }
 

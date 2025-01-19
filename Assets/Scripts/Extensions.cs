@@ -32,6 +32,8 @@ namespace Extentions
         public static Vector2 GetPositionOnScreen(this Camera camera, Vector3 worldPosition, RectTransform screen)
         {
             var relativePos = camera.WorldToViewportPoint(worldPosition);
+            if (relativePos.z < 0f)
+                return Vector2.one * -1000f;
             return new Vector2(relativePos.x * screen.rect.width, relativePos.y * screen.rect.height);
         }
     }

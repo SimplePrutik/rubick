@@ -1,7 +1,8 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
+using Movement;
 using ScriptableObjects;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using Zenject;
 
@@ -9,24 +10,41 @@ namespace Entities
 {
     public class Dummy : BaseEnemy
     {
+        private UnitMovementController unitMovementController;
+        private GroundGravityController groundGravityController;
+        
         [SerializeField] private MeshRenderer meshRenderer;
         [SerializeField] private Color normalColor;
         [SerializeField] private Color hitColor;
+        [SerializeField] private Collider enemyDetectionCollider;
 
         private Tween onTakingDamage;
-        
-        private MovementGravityController movementGravityController;
+
+        private EnemyState state;
+        private Transform target;
+        private CapsuleCollider bodyCollider;
         
         [Inject]
         public void Construct(
             UnitColliderService unitColliderService,
             PhysicsSettings physicsSettings)
         {
-            var collider = GetComponent<CapsuleCollider>();
-            movementGravityController = new MovementGravityController(physicsSettings, unitColliderService, collider, transform);
+            bodyCollider = GetComponent<CapsuleCollider>();
             
-            meshRenderer.material = new Material(meshRenderer.material);
-            meshRenderer.material.color = normalColor;
+            unitMovementController = new UnitMovementController(unitColliderService);
+            groundGravityController = new GroundGravityController(physicsSettings, unitColliderService, transform, bodyCollider);
+
+            Observable
+                .EveryUpdate()
+                .ObserveOnMainThread()
+                .Subscribe(_ =>
+                {
+                    unitMovementController.AddMovementForce(groundGravityController.GetForce());
+                    transform.position += unitMovementController.DeltaMovement(bodyCollider, transform.position);
+                })
+                .AddTo(this);
+            
+            meshRenderer.material = new Material(meshRenderer.material) {color = normalColor};
         }
 
         public override void TakeDamage(float value, int sourceId)
@@ -42,6 +60,19 @@ namespace Entities
         {
             onTakingDamage?.Kill();
             base.Die();
+        }
+
+        private void Update()
+        {
+            switch (state)
+            {
+                case EnemyState.Idle:
+                    break;
+                case EnemyState.Attack:
+                    break;
+                case EnemyState.Dead:
+                    break;
+            }
         }
     }
 }

@@ -1317,6 +1317,7 @@
           <e p="Fonts" t="Include" />
           <e p="Prefabs" t="Include">
             <e p="3D" t="Include">
+              <e p="Cameras" t="Include" />
               <e p="Enemies" t="Include" />
               <e p="Maze" t="Include" />
               <e p="Projectiles" t="Include" />
@@ -1344,7 +1345,6 @@
               <e p="AbilityViewChange.cs" t="Include" />
             </e>
             <e p="CooldownTimer.cs" t="Include" />
-            <e p="IAbility.cs" t="Include" />
           </e>
           <e p="AppStart.cs" t="Include" />
           <e p="ButtonSettings.cs" t="Include" />
@@ -1368,6 +1368,7 @@
             </e>
             <e p="EntityController.cs" t="Include" />
             <e p="IDamagable.cs" t="Include" />
+            <e p="IEntity.cs" t="Include" />
             <e p="PlayerController.cs" t="Include" />
           </e>
           <e p="Extensions.cs" t="Include" />
@@ -1377,6 +1378,7 @@
               <e p="BaseProjectile.cs" t="Include" />
             </e>
           </e>
+          <e p="GroundGravityController.cs" t="Include" />
           <e p="Indicator.cs" t="Include" />
           <e p="Installers" t="Include">
             <e p="MainInstaller.cs" t="Include" />
@@ -1386,8 +1388,10 @@
             <e p="EnvironmentObject.cs" t="Include" />
             <e p="MazeGenerator.cs" t="Include" />
           </e>
-          <e p="MovementGravityController.cs" t="Include" />
-          <e p="PlayerMovementController.cs" t="Include" />
+          <e p="Movement" t="Include">
+            <e p="UnitMovementController.cs" t="Include" />
+          </e>
+          <e p="PlayerMovementService.cs" t="Include" />
           <e p="PlayerStatsController.cs" t="Include" />
           <e p="Pooling" t="Include">
             <e p="Pool.cs" t="Include" />
@@ -1418,6 +1422,13 @@
             </e>
           </e>
           <e p="UnitColliderService.cs" t="Include" />
+          <e p="Weapons" t="Include">
+            <e p="ConcreteWeapons" t="Include">
+              <e p="Trident.cs" t="Include" />
+              <e p="Weapon.cs" t="Include" />
+            </e>
+            <e p="WeaponService.cs" t="Include" />
+          </e>
         </e>
         <e p="Sprites" t="Include">
           <e p="Common" t="Include" />

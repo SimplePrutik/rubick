@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Extentions;
 using Pooling;
 using TMPro;

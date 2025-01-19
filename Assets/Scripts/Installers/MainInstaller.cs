@@ -1,10 +1,10 @@
 using Abilities;
 using Entities;
-using Extentions;
 using ScriptableObjects;
 using UI;
 using UI.Reticle;
 using UnityEngine;
+using Weapons;
 using Zenject;
 
 public class MainInstaller : MonoInstaller
@@ -28,7 +28,9 @@ public class MainInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<ReticleService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<CameraService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<UnitColliderService>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<PlayerMovementService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<RewardService>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<WeaponService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<PlayerStatsController>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<DamageIndicatorController>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<AppStart>().AsSingle().NonLazy();

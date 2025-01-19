@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Fight.Projectiles;
 using Pooling;
 using UI.Reticle;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Abilities
@@ -13,13 +15,18 @@ namespace Abilities
         private DamageIndicatorController damageIndicatorController;
         private Pool<Arrow> arrowPool;
         private CooldownTimer cooldownTimer;
+        private IDisposable chargeDisposable;
         
         private float projectileSpeed = 0.5f;
         private float damage = 2f;
+        private float chargeTime = 1f;
+        private KeyCode CancelButton;
         
         private float projectilePathLength => projectileSpeed * PROJECTILE_TTL;
 
         private const float PROJECTILE_TTL = 5f;
+
+        public ReactiveProperty<float> ChargeState = new ReactiveProperty<float>();
 
         [Inject]
         public void Construct(
@@ -29,7 +36,10 @@ namespace Abilities
             this.reticleService = reticleService;
             this.damageIndicatorController = damageIndicatorController;
 
-            UseButton = ButtonSettings.BasicAttack;
+            UseButton = ButtonSettings.MainUse;
+            CancelButton = ButtonSettings.SecondaryUse;
+            abilityType = AbilityType.ChargeAndHold;
+            ChargeState.Value = 0;
             
             cooldownTimer = new CooldownTimer(0.4f);
             
@@ -39,6 +49,7 @@ namespace Abilities
         public override void Use()
         {
             base.Use();
+            chargeDisposable?.Dispose();
             cooldownTimer.Start();
             var shotRays = reticleService.GetAllShotRays();
             foreach (var ray in shotRays)
@@ -55,10 +66,37 @@ namespace Abilities
             }
         }
 
-        public override void Prepare(params object[] args)
+        public override void Charge()
         {
-            base.Prepare();
-            arrowPool = (Pool<Arrow>) args[0];
+            base.Charge();
+            chargeDisposable = Observable
+                .EveryUpdate()
+                .TakeUntil(Observable.Timer(TimeSpan.FromSeconds(chargeTime)))
+                .Subscribe(_ =>
+                {
+                    if (!Input.GetKey(UseButton))
+                        if (ChargeState.Value >= chargeTime)
+                        {
+                            Use();
+                        }
+                        else
+                        {
+                            Halt();
+                        }
+                    else if (Input.GetKey(CancelButton))
+                    {
+                        Halt();
+                    }
+                    ChargeState.Value += Time.deltaTime / chargeTime;
+                });
+
+        }
+
+        public override void Halt()
+        {
+            base.Halt();
+            chargeDisposable?.Dispose();
+            ChargeState.Value = 0f;
         }
     }
 }

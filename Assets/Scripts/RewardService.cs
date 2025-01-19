@@ -12,6 +12,6 @@ public class RewardService
     
     public void GiveReward(int value)
     {
-        playerStatsController.GoldCollected.Value++;
+        playerStatsController.GoldCollected.Value += value;
     }
 }

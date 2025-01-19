@@ -6,12 +6,25 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public abstract class Ability : IAbility
+    public abstract class Ability
     {
+        public enum AbilityType
+        {
+            Tap,
+            ChargeAndTap,
+            ChargeAndHold,
+            Hold
+        }
+        
         protected List<ReactiveProperty<bool>> conditions = new List<ReactiveProperty<bool>>();
+        public AbilityType abilityType;
         public KeyCode UseButton { get; protected set; }
     
         public virtual void Use()
+        {
+        }
+        
+        public virtual void Charge()
         {
         }
 
@@ -19,17 +32,7 @@ namespace Abilities
         {
         }
 
-        public virtual void Prepare(params object [] args)
-        {
-        }
-
-        public void CheckAndUse()
-        {
-            if (AreConditionsMet())
-                Use();
-        }
-
-        private bool AreConditionsMet()
+        public bool AreConditionsMet()
         {
             return conditions.All(condition => condition.HasValue && condition.Value);
         }
